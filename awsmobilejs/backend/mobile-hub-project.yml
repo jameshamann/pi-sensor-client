@@ -1,39 +1,5 @@
 --- !com.amazonaws.mobilehub.v0.Project 
 features:
-  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
-    components:
-      Pi: !com.amazonaws.mobilehub.v0.API 
-        attributes:
-          name: Pi
-          requires-signin: false
-          sdk-generation-stage-name: Development
-        paths:
-          /data: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Pi-20180716151838.zip
-            description: 'Handler for calls to resource path : /data/{proxy+}'
-            enableCORS: true
-            environment: {}
-            handler: lambda.handler
-            hashcode: qK5JKEzXQWuNQEA7TZ9SVzarDGcd5wtkM8rRTSdVC+Y=
-            memorySize: '128'
-            modified: '2018-07-16T14:21:05.020+0000'
-            name: Pi
-            runtime: nodejs6.10
-            timeout: '3'
-            version: Um_OUVG2QLM6D6r2EKa.xMTpIoWSxqwH
-          '/data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Pi-20180716151838.zip
-            description: 'Handler for calls to resource path : /data/{proxy+}'
-            enableCORS: true
-            environment: {}
-            handler: lambda.handler
-            hashcode: qK5JKEzXQWuNQEA7TZ9SVzarDGcd5wtkM8rRTSdVC+Y=
-            memorySize: '128'
-            modified: '2018-07-16T14:21:05.020+0000'
-            name: Pi
-            runtime: nodejs6.10
-            timeout: '3'
-            version: 4Ne.cY1mz9MVSNP102SkzGdQr4lD1Yg2
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -57,5 +23,26 @@ features:
     components:
       analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
   sign-in: !com.amazonaws.mobilehub.v0.SignIn {}
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    components:
+      pi_sensor_dataCRUD: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: pi_sensor_dataCRUD
+          requires-signin: false
+        paths:
+          /pi_sensor_data: !com.amazonaws.mobilehub.v0.Function 
+            name: pisensordata
+            codeFilename: uploads/pisensordata.zip
+            handler: lambda.handler
+            enableCORS: true
+            runtime: nodejs6.10
+            environment: {}
+          '/pi_sensor_data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            name: pisensordata
+            codeFilename: uploads/pisensordata.zip
+            handler: lambda.handler
+            enableCORS: true
+            runtime: nodejs6.10
+            environment: {}
 name: Raspberry-Pi-Sensor-Client
 region: eu-west-2
