@@ -8,9 +8,23 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Amplify, { API } from 'aws-amplify';
+
+
 
 
 class Home extends Component {
+
+  componentDidMount(){
+    let apiName = 'pi_sensor_dataCRUD';
+    let path = '/pi_sensor_data/bd218778-8903-11e8-9085-b827eb93cade';
+    API.get(apiName, path).then(response => {
+        console.log(response)
+    }).catch(error => {
+        console.log(error.response)
+    });
+  }
+
   render() {
     return (
     <MuiThemeProvider>
