@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Amplify, { API } from 'aws-amplify';
 import _ from 'lodash'
-
+const uuid = require('node-uuid')
 
 
 class Home extends Component {
@@ -20,6 +20,22 @@ class Home extends Component {
     this.state = {temp: '', humidity: '', time_stamp: '', data: ''}
 
   }
+
+  get_time_int = function (uuid_str) {
+       var uuid_arr = uuid_str.split( '-' ),
+           time_str = [
+               uuid_arr[ 2 ].substring( 1 ),
+               uuid_arr[ 1 ],
+               uuid_arr[ 0 ]
+           ].join( '' );
+       return parseInt( time_str, 16 );
+   };
+
+   get_date_obj = function (uuid_str) {
+       var int_time = this.get_time_int( uuid_str ) - 122192928000000000,
+           int_millisec = Math.floor( int_time / 10000 );
+       return new Date( int_millisec );
+   };
 
 
   componentDidMount(){
@@ -36,19 +52,20 @@ class Home extends Component {
     }).catch(error => {
         console.log(error.response)
     });
+    var date_obj = this.get_date_obj('960584e2-8939-11e8-87bc-b827eb93cade');
+    console.log(date_obj.toLocaleString())
   }
 
   render() {
-    console.log(this.state.temp)
     const data = this.state.data;
-    console.log(data)
+    const lastReading = this.get_date_obj('960584e2-8939-11e8-87bc-b827eb93cade')
     return (
     <MuiThemeProvider>
       <AppBar
          title="Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
-      
+
       <div>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
@@ -59,7 +76,9 @@ class Home extends Component {
         <Typography gutterBottom variant="headline" component="h2">
           Humidity {this.state.humidity}%
         </Typography>
-
+          <Typography component="p">
+          Last Reading: {lastReading.toLocaleString()}
+          </Typography>
 
         </CardContent>
         <CardActions>
