@@ -1,0 +1,61 @@
+--- !com.amazonaws.mobilehub.v0.Project 
+features:
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    components:
+      pi_sensor_dataCRUD: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: pi_sensor_dataCRUD
+          requires-signin: false
+          sdk-generation-stage-name: Development
+        paths:
+          /pi_sensor_data: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/pisensordata-20180716162346.zip
+            description: 'Handler for calls to resource path : /pi_sensor_data/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: /ZSIovbi5JU+cOfQRpi6VR/jQXQKL5vHEreUdHptje8=
+            memorySize: '128'
+            modified: '2018-07-16T15:26:25.654+0000'
+            name: pisensordata
+            runtime: nodejs6.10
+            timeout: '3'
+            version: djjI4..SqGB5q.288A.BlppoOZJU9pmd
+          '/pi_sensor_data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/pisensordata-20180716162346.zip
+            description: 'Handler for calls to resource path : /pi_sensor_data/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: /ZSIovbi5JU+cOfQRpi6VR/jQXQKL5vHEreUdHptje8=
+            memorySize: '128'
+            modified: '2018-07-16T15:26:25.654+0000'
+            name: pisensordata
+            runtime: nodejs6.10
+            timeout: '3'
+            version: Zu9EwL69sz3PXhvjk_Q.0sYwHU1utT2O
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+    attributes:
+      enabled: true
+      visibility: public-global
+    components:
+      release: !com.amazonaws.mobilehub.v0.Bucket {}
+  database: !com.amazonaws.mobilehub.v0.Database 
+    components:
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase 
+        tables:
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              ID: S
+            hashKeyName: ID
+            hashKeyType: S
+            rangeKeyName: ''
+            rangeKeyType: ''
+            tableName: ___DYNAMIC_PREFIX___-pi_sensor_data
+            tablePrivacy: public
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
+    components:
+      analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn {}
+name: Raspberry-Pi-Sensor-Client
+region: eu-west-2
