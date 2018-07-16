@@ -24,12 +24,13 @@ class Home extends Component {
 
   componentDidMount(){
     let apiName = 'pi_sensor_dataCRUD';
-    let path = '/pi_sensor_data/facf2c6a-8903-11e8-9085-b827eb93cade';
+    let path = '/pi_sensor_data/960584e2-8939-11e8-87bc-b827eb93cade';
     API.get(apiName, path).then(response => {
+      console.log(response[0].payload.temp)
         this.setState({
-          temp: response,
-          humidity: response,
-          time_stamp: response,
+          temp: response[0].payload.temp,
+          humidity: response[0].payload.humidity,
+          time_stamp: response[0].ID,
           data: response
         })
     }).catch(error => {
@@ -38,6 +39,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.state.temp)
     const data = this.state.data;
     console.log(data)
     return (
@@ -46,19 +48,18 @@ class Home extends Component {
          title="Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
-      <RaisedButton label="Hello World!" />
+      
       <div>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
-              {_.map(data, ({ payload, ID }) => (
-                <Typography gutterBottom variant="headline" component="h2">
-                  {payload.data}
-                  <br />
-                  <br />
-                  <Typography> {ID}  </Typography>
-                </Typography>
-                ))
-              }
+
+        <Typography gutterBottom variant="headline" component="h2">
+          Tempreature {this.state.temp}˚C
+        </Typography>
+        <Typography gutterBottom variant="headline" component="h2">
+          Humidity {this.state.humidity}%
+        </Typography>
+
 
         </CardContent>
         <CardActions>
