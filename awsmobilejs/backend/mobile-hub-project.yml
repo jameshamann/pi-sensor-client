@@ -9,37 +9,50 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /data: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Pi-20180716122027.zip
+            codeFilename: uploads/Pi-20180716151838.zip
             description: 'Handler for calls to resource path : /data/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: 8B+hsVfPrE6NRJxsY6fFRUaFvFonl6GFjBBbWDgkPu8=
+            hashcode: qK5JKEzXQWuNQEA7TZ9SVzarDGcd5wtkM8rRTSdVC+Y=
             memorySize: '128'
-            modified: '2018-07-16T11:24:00.577+0000'
+            modified: '2018-07-16T14:21:05.020+0000'
             name: Pi
             runtime: nodejs6.10
             timeout: '3'
-            version: UgGORkDkELzABAr6AKUBVxdIiDQw8Adn
+            version: Um_OUVG2QLM6D6r2EKa.xMTpIoWSxqwH
           '/data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/Pi-20180716122027.zip
+            codeFilename: uploads/Pi-20180716151838.zip
             description: 'Handler for calls to resource path : /data/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: 8B+hsVfPrE6NRJxsY6fFRUaFvFonl6GFjBBbWDgkPu8=
+            hashcode: qK5JKEzXQWuNQEA7TZ9SVzarDGcd5wtkM8rRTSdVC+Y=
             memorySize: '128'
-            modified: '2018-07-16T11:24:00.577+0000'
+            modified: '2018-07-16T14:21:05.020+0000'
             name: Pi
             runtime: nodejs6.10
             timeout: '3'
-            version: GGnxuLbrPQew2V7pSjWMroR_ry_mViBY
+            version: 4Ne.cY1mz9MVSNP102SkzGdQr4lD1Yg2
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
       visibility: public-global
     components:
       release: !com.amazonaws.mobilehub.v0.Bucket {}
+  database: !com.amazonaws.mobilehub.v0.Database 
+    components:
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase 
+        tables:
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              ID: S
+            hashKeyName: ID
+            hashKeyType: S
+            rangeKeyName: ''
+            rangeKeyType: ''
+            tableName: ___DYNAMIC_PREFIX___-pi_sensor_data
+            tablePrivacy: public
   mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
     components:
       analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
