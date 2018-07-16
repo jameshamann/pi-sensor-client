@@ -9,7 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Amplify, { API } from 'aws-amplify';
-
+import _ from 'lodash'
 
 
 
@@ -38,7 +38,8 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.state.data[0])
+    const data = this.state.data;
+    console.log(data)
     return (
     <MuiThemeProvider>
       <AppBar
@@ -49,9 +50,13 @@ class Home extends Component {
       <div>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-            {this.state.data.payload}
-          </Typography>
+              {_.map(data, ({ payload, ID }) => (
+                <Typography gutterBottom variant="headline" component="h2">
+                  {payload.data}
+                </Typography>
+
+                ))
+              }
           <Typography component="p">
             Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
             across all continents except Antarctica
