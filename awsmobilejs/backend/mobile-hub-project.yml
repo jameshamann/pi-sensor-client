@@ -1,14 +1,14 @@
---- !com.amazonaws.mobilehub.v0.Project 
+--- !com.amazonaws.mobilehub.v0.Project
 features:
-  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic
     components:
-      pi-sensor-dataCRUD: !com.amazonaws.mobilehub.v0.API 
+      pi-sensor-dataCRUD: !com.amazonaws.mobilehub.v0.API
         attributes:
           name: pi-sensor-dataCRUD
           requires-signin: false
           sdk-generation-stage-name: Development
         paths:
-          /pi-sensor-data: !com.amazonaws.mobilehub.v0.Function 
+          /pi-sensor-data: !com.amazonaws.mobilehub.v0.Function
             codeFilename: uploads/pisensordata-20180717154542.zip
             description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
             enableCORS: true
@@ -21,7 +21,7 @@ features:
             runtime: nodejs6.10
             timeout: '3'
             version: D8QIpEgnLTCBFPTJ9pJ2bTrG57BQtbff
-          '/pi-sensor-data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+          '/pi-sensor-data/{proxy+}': !com.amazonaws.mobilehub.v0.Function
             codeFilename: uploads/pisensordata-20180717154542.zip
             description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
             enableCORS: true
@@ -34,17 +34,17 @@ features:
             runtime: nodejs6.10
             timeout: '3'
             version: SzmewfgGGSgY90ajCiUadxUXp4ZWXJ3S
-  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery
     attributes:
       enabled: true
       visibility: public-global
     components:
       release: !com.amazonaws.mobilehub.v0.Bucket {}
-  database: !com.amazonaws.mobilehub.v0.Database 
+  database: !com.amazonaws.mobilehub.v0.Database
     components:
-      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase 
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase
         tables:
-          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+          - !com.amazonaws.mobilehub.v0.NoSQLTable
             attributes:
               ID: S
               TimeStamp: S
@@ -54,7 +54,7 @@ features:
             rangeKeyType: S
             tableName: ___DYNAMIC_PREFIX___-pi-sensor-data
             tablePrivacy: public
-  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint
     components:
       analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
   sign-in: !com.amazonaws.mobilehub.v0.SignIn {}

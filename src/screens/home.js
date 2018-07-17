@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import Amplify, { API } from 'aws-amplify';
 import _ from 'lodash'
 import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
-const uuid = require('node-uuid')
+const uuidv1 = require('uuid/v1');
 
 
 class Home extends Component {
@@ -72,6 +72,18 @@ class Home extends Component {
       {x: 8, y: 2},
       {x: 9, y: 0}
     ];
+    const graphDataTwo = [
+      {x: 0, y: 9},
+      {x: 1, y: 8},
+      {x: 2, y: 6},
+      {x: 3, y: 6},
+      {x: 4, y: 5},
+      {x: 5, y: 4},
+      {x: 6, y: 5},
+      {x: 7, y: 2},
+      {x: 8, y: 1},
+      {x: 9, y: 6}
+    ];
     const data = this.state.data;
     const lastReading = this.get_date_obj('07c73c48-89cf-11e8-8596-b827eb93cade')
     return (
@@ -118,6 +130,7 @@ class Home extends Component {
             <VerticalGridLines />
             <HorizontalGridLines />
            <LineSeries data={graphData} />
+          <LineSeries data={graphDataTwo} />
          </XYPlot>
         </Card>
        </Grid>
