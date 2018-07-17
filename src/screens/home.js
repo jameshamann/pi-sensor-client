@@ -42,10 +42,10 @@ class Home extends Component {
 
 
   componentDidMount(){
-    let apiName = 'pi_sensor_dataCRUD';
-    let path = '/pi_sensor_data/960584e2-8939-11e8-87bc-b827eb93cade';
+    let apiName = 'pi-sensor-dataCRUD';
+    let path = '/pi-sensor-data/07c73c48-89cf-11e8-8596-b827eb93cade';
     API.get(apiName, path).then(response => {
-      console.log(response[0].payload.temp)
+      console.log(response[0].payload)
         this.setState({
           temp: response[0].payload.temp,
           humidity: response[0].payload.humidity,
@@ -55,7 +55,7 @@ class Home extends Component {
     }).catch(error => {
         console.log(error.response)
     });
-    var date_obj = this.get_date_obj('960584e2-8939-11e8-87bc-b827eb93cade');
+    var date_obj = this.get_date_obj('07c73c48-89cf-11e8-8596-b827eb93cade');
     console.log(date_obj.toLocaleString())
   }
 
@@ -73,7 +73,7 @@ class Home extends Component {
       {x: 9, y: 0}
     ];
     const data = this.state.data;
-    const lastReading = this.get_date_obj('960584e2-8939-11e8-87bc-b827eb93cade')
+    const lastReading = this.get_date_obj('07c73c48-89cf-11e8-8596-b827eb93cade')
     return (
     <MuiThemeProvider>
       <AppBar

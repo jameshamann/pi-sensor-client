@@ -1,0 +1,62 @@
+--- !com.amazonaws.mobilehub.v0.Project 
+features:
+  cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
+    components:
+      pi-sensor-dataCRUD: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: pi-sensor-dataCRUD
+          requires-signin: false
+          sdk-generation-stage-name: Development
+        paths:
+          /pi-sensor-data: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/pisensordata-20180717154542.zip
+            description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: 9zjMbg4BvodiqGjCP5cBXFANM5AbzFnZgIO0P9Bxe30=
+            memorySize: '128'
+            modified: '2018-07-17T14:48:46.916+0000'
+            name: pisensordata
+            runtime: nodejs6.10
+            timeout: '3'
+            version: D8QIpEgnLTCBFPTJ9pJ2bTrG57BQtbff
+          '/pi-sensor-data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/pisensordata-20180717154542.zip
+            description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: 9zjMbg4BvodiqGjCP5cBXFANM5AbzFnZgIO0P9Bxe30=
+            memorySize: '128'
+            modified: '2018-07-17T14:48:46.916+0000'
+            name: pisensordata
+            runtime: nodejs6.10
+            timeout: '3'
+            version: SzmewfgGGSgY90ajCiUadxUXp4ZWXJ3S
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
+    attributes:
+      enabled: true
+      visibility: public-global
+    components:
+      release: !com.amazonaws.mobilehub.v0.Bucket {}
+  database: !com.amazonaws.mobilehub.v0.Database 
+    components:
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase 
+        tables:
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              ID: S
+              TimeStamp: S
+            hashKeyName: ID
+            hashKeyType: S
+            rangeKeyName: TimeStamp
+            rangeKeyType: S
+            tableName: ___DYNAMIC_PREFIX___-pi-sensor-data
+            tablePrivacy: public
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
+    components:
+      analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn {}
+name: Pi-Sensor-Client
+region: eu-west-2
