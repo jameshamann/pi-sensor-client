@@ -80,8 +80,12 @@ class Home extends Component {
          title="Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
+      <br />
+      <br />
       <div>
         <Grid container spacing={24}>
+          <Grid item xs={6} sm={3}>
+          </Grid>
           <Grid item xs={6} sm={3}>
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardContent>
@@ -94,7 +98,6 @@ class Home extends Component {
               <Typography component="p">
               Last Reading: {lastReading.toLocaleString()}
               </Typography>
-
             </CardContent>
             <CardActions>
               <Button size="small" color="primary">
@@ -106,7 +109,6 @@ class Home extends Component {
             </CardActions>
           </Card>
         </Grid>
-
 
       <Grid item xs={6} sm={3}>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
