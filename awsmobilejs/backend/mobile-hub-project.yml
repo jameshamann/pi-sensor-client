@@ -9,31 +9,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /pi_sensor_data: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/pisensordata-20180717110352.zip
+            codeFilename: uploads/pisensordata-20180717124132.zip
             description: 'Handler for calls to resource path : /pi_sensor_data/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: 6pMR0DQP1PCo9qrFfoKMpdFrF8jo4YF0dhfDxzVCDdw=
+            hashcode: 9JCdRGF4QhDF4R+G5JzIk8JtQWpjOxtrGBpCFTjKTRw=
             memorySize: '128'
-            modified: '2018-07-17T10:06:28.518+0000'
+            modified: '2018-07-17T11:44:15.583+0000'
             name: pisensordata
             runtime: nodejs6.10
             timeout: '3'
-            version: JYNbGnLr69jLJFZ9l2Qy25lnmv7CWQE3
+            version: _odgL2VtielQupuOSDyotN29LMMZEaa4
           '/pi_sensor_data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/pisensordata-20180717110352.zip
+            codeFilename: uploads/pisensordata-20180717124132.zip
             description: 'Handler for calls to resource path : /pi_sensor_data/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: 6pMR0DQP1PCo9qrFfoKMpdFrF8jo4YF0dhfDxzVCDdw=
+            hashcode: 9JCdRGF4QhDF4R+G5JzIk8JtQWpjOxtrGBpCFTjKTRw=
             memorySize: '128'
-            modified: '2018-07-17T10:06:28.518+0000'
+            modified: '2018-07-17T11:44:15.583+0000'
             name: pisensordata
             runtime: nodejs6.10
             timeout: '3'
-            version: Gr8PDnsKi1R1.cjv6l02RGEC81wRAKLt
+            version: odjoRgbuA1mQGEagYz1gvy5xBwDG9rJ8
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -47,6 +47,7 @@ features:
           - !com.amazonaws.mobilehub.v0.NoSQLTable 
             attributes:
               ID: S
+              Time_Stamp: S
             hashKeyName: ID
             hashKeyType: S
             rangeKeyName: ''

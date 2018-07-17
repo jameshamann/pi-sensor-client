@@ -56,6 +56,24 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
+ app.get('/latest_pi_sensor_data', function(req, res) {
+   exports.handler = (event, context, callback) => {
+           // Load the message passed into the Lambda function into a JSON object
+           var eventText = JSON.stringify(event, null, 2);
+
+           // Log a message to the console, you can view this text in the Monitoring tab in the Lambda console or in the CloudWatch Logs console
+           console.log("Received event:", eventText);
+
+           return eventText
+
+           // Create a string extracting the click type and serial number from the message sent by the AWS IoT button
+
+           // Write the string to the console
+
+         };
+ });
+
+
 app.get('/pi_sensor_data/:ID', function(req, res) {
   var condition = {}
   condition[partitionKeyName] = {
@@ -222,18 +240,3 @@ app.listen(3000, function() {
 
 
 module.exports = app
-
-exports.handler = (event, context, callback) => {
-        // Load the message passed into the Lambda function into a JSON object
-        var eventText = JSON.stringify(event, null, 2);
-
-        // Log a message to the console, you can view this text in the Monitoring tab in the Lambda console or in the CloudWatch Logs console
-        console.log("Received event:", eventText);
-
-        // Create a string extracting the click type and serial number from the message sent by the AWS IoT button
-        var messageText = "Received  " + event.clickType + " message from button ID: " + event.serialNumber;
-
-        // Write the string to the console
-        console.log("Message to send: " + messageText);
-
-      };
