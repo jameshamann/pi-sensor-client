@@ -74,7 +74,7 @@ exports.handler = (event, context, callback) => {
  ********************************/
 
 app.get('/pi-sensor-data/:ID', function(req, res) {
-    getData()
+    console.log(getData())
      var condition = {}
      condition[partitionKeyName] = {
        ComparisonOperator: 'EQ'

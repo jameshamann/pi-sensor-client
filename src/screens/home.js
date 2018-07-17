@@ -45,7 +45,7 @@ class Home extends Component {
     let apiName = 'pi-sensor-dataCRUD';
     let path = '/pi-sensor-data/07c73c48-89cf-11e8-8596-b827eb93cade';
     API.get(apiName, path).then(response => {
-      console.log(response[0].payload)
+      console.log(response)
         this.setState({
           temp: response[0].payload.temp,
           humidity: response[0].payload.humidity,
