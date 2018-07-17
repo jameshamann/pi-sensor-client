@@ -8,8 +8,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import Amplify, { API } from 'aws-amplify';
 import _ from 'lodash'
+import {XYPlot, LineSeries} from 'react-vis';
 const uuid = require('node-uuid')
 
 
@@ -57,6 +60,18 @@ class Home extends Component {
   }
 
   render() {
+    const graphData = [
+      {x: 0, y: 8},
+      {x: 1, y: 5},
+      {x: 2, y: 4},
+      {x: 3, y: 9},
+      {x: 4, y: 1},
+      {x: 5, y: 7},
+      {x: 6, y: 6},
+      {x: 7, y: 3},
+      {x: 8, y: 2},
+      {x: 9, y: 0}
+    ];
     const data = this.state.data;
     const lastReading = this.get_date_obj('960584e2-8939-11e8-87bc-b827eb93cade')
     return (
@@ -65,32 +80,43 @@ class Home extends Component {
          title="Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
-
       <div>
+        <Grid container spacing={24}>
+          <Grid item xs={6} sm={3}>
+          <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <CardContent>
+            <Typography gutterBottom variant="headline" component="h2">
+              Tempreature {this.state.temp}˚C
+            </Typography>
+            <Typography gutterBottom variant="headline" component="h2">
+              Humidity {this.state.humidity}%
+            </Typography>
+              <Typography component="p">
+              Last Reading: {lastReading.toLocaleString()}
+              </Typography>
+
+            </CardContent>
+            <CardActions>
+              <Button size="small" color="primary">
+                Share
+              </Button>
+              <Button size="small" color="primary">
+                Learn More
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+
+
+      <Grid item xs={6} sm={3}>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <CardContent>
-
-        <Typography gutterBottom variant="headline" component="h2">
-          Tempreature {this.state.temp}˚C
-        </Typography>
-        <Typography gutterBottom variant="headline" component="h2">
-          Humidity {this.state.humidity}%
-        </Typography>
-          <Typography component="p">
-          Last Reading: {lastReading.toLocaleString()}
-          </Typography>
-
-        </CardContent>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
-      </Card>
-      </div>
+        <XYPlot height={300} width={300}>
+           <LineSeries data={graphData} />
+         </XYPlot>
+        </Card>
+       </Grid>
+     </Grid>
+     </div>
     </MuiThemeProvider>
 
     );
