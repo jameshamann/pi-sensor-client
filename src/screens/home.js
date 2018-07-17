@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Amplify, { API } from 'aws-amplify';
 import _ from 'lodash'
-import {XYPlot, LineSeries} from 'react-vis';
+import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 const uuid = require('node-uuid')
 
 
@@ -113,6 +113,10 @@ class Home extends Component {
       <Grid item xs={6} sm={3}>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <XYPlot height={300} width={300}>
+        <YAxis hideLine tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+          <XAxis bottom hideLine tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+            <VerticalGridLines />
+            <HorizontalGridLines />
            <LineSeries data={graphData} />
          </XYPlot>
         </Card>
