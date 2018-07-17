@@ -30,7 +30,7 @@ const awsmobile = {}
 
 if (hasDynamicPrefix) {
   tableName = mhprefix + '-' + tableName;
-} 
+}
 
 const UNAUTH = 'UNAUTH';
 
@@ -52,61 +52,57 @@ const convertUrlType = (param, type) => {
   }
 }
 
+function getData() {
+exports.handler = (event, context, callback) => {
+        // Load the message passed into the Lambda function into a JSON object
+        var eventText = JSON.stringify(event, null, 2);
+
+        // Log a message to the console, you can view this text in the Monitoring tab in the Lambda console or in the CloudWatch Logs console
+        console.log("Received event:", eventText);
+
+        return eventText
+
+        // Create a string extracting the click type and serial number from the message sent by the AWS IoT button
+
+        // Write the string to the console
+
+      };
+  }
+
 /********************************
  * HTTP Get method for list objects *
  ********************************/
 
-<<<<<<< HEAD
 app.get('/pi-sensor-data/:ID', function(req, res) {
-=======
- app.get('/latest_pi_sensor_data', function(req, res) {
-   exports.handler = (event, context, callback) => {
-           // Load the message passed into the Lambda function into a JSON object
-           var eventText = JSON.stringify(event, null, 2);
+    getData()
+     var condition = {}
+     condition[partitionKeyName] = {
+       ComparisonOperator: 'EQ'
+     }
 
-           // Log a message to the console, you can view this text in the Monitoring tab in the Lambda console or in the CloudWatch Logs console
-           console.log("Received event:", eventText);
+     if (userIdPresent && req.apiGateway) {
+       condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
+     } else {
+       try {
+         condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
+       } catch(err) {
+         res.json({error: 'Wrong column type ' + err});
+       }
+     }
 
-           return eventText
+     let queryParams = {
+       TableName: tableName,
+       KeyConditions: condition
+     }
 
-           // Create a string extracting the click type and serial number from the message sent by the AWS IoT button
-
-           // Write the string to the console
-
-         };
- });
-
-
-app.get('/pi_sensor_data/:ID', function(req, res) {
->>>>>>> eb237113399da164cbb1a8aa1863fa9eea24262b
-  var condition = {}
-  condition[partitionKeyName] = {
-    ComparisonOperator: 'EQ'
-  }
-  
-  if (userIdPresent && req.apiGateway) {
-    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
-  } else {
-    try {
-      condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
-    } catch(err) {
-      res.json({error: 'Wrong column type ' + err});
-    }
-  }
-
-  let queryParams = {
-    TableName: tableName,
-    KeyConditions: condition
-  } 
-
-  dynamodb.query(queryParams, (err, data) => {
-    if (err) {
-      res.json({error: 'Could not load items: ' + err});
-    } else {
-      res.json(data.Items);
-    }
-  });
-});
+     dynamodb.query(queryParams, (err, data) => {
+       if (err) {
+         res.json({error: 'Could not load items: ' + err});
+       } else {
+         res.json(data.Items);
+       }
+     });
+   });
 
 /*****************************************
  * HTTP Get method for get single object *
@@ -156,7 +152,7 @@ app.get('/pi-sensor-data/object/:ID/:TimeStamp', function(req, res) {
 *************************************/
 
 app.put(path, function(req, res) {
-  
+
   if (userIdPresent) {
     req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
@@ -179,7 +175,7 @@ app.put(path, function(req, res) {
 *************************************/
 
 app.post(path, function(req, res) {
-  
+
   if (userIdPresent) {
     req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
