@@ -77,7 +77,7 @@ class Home extends Component {
     return (
     <MuiThemeProvider>
       <AppBar
-         title="Dashboard"
+         title="Raspberry Pi Weather Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
       <br />
