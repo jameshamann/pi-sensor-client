@@ -71,7 +71,11 @@ const convertUrlType = (param, type) => {
  ********************************/
 
  app.get('/latest-reading', function(req, res) {
-      res.send("HELLO WORLD FROM NEW ROUTE")
+   exports.handler = (event, context, callback) => {
+           var eventText = JSON.stringify(event, null, 2);
+           console.log("Received event:", eventText);
+           res.send(eventText)
+        };
     });
 
 app.get('/pi-sensor-data/:ID', function(req, res) {
