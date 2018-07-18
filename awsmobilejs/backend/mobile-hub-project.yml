@@ -8,32 +8,58 @@ features:
           requires-signin: false
           sdk-generation-stage-name: Development
         paths:
+          /latest-reading: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/pisensordata-20180718102556.zip
+            description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: s85EPpPFW7CcxygG+30as1FfyRwd3+nMwGYUCy18oz8=
+            memorySize: '128'
+            modified: '2018-07-18T09:28:50.175+0000'
+            name: pisensordata
+            runtime: nodejs6.10
+            timeout: '3'
+            version: ZIpil5_X9u29wDQygatryMT0qjoyY1ue
+          '/latest-reading/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/pisensordata-20180718102556.zip
+            description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: s85EPpPFW7CcxygG+30as1FfyRwd3+nMwGYUCy18oz8=
+            memorySize: '128'
+            modified: '2018-07-18T09:28:50.175+0000'
+            name: pisensordata
+            runtime: nodejs6.10
+            timeout: '3'
+            version: SqyPUund87l2ymiQVU2SiTv3R3B2yl0u
           /pi-sensor-data: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/pisensordata-20180718095915.zip
+            codeFilename: uploads/pisensordata-20180718102556.zip
             description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: MNFutWTeleyplHReQXbrO1789n7b/YqDAYjhAMxORE8=
+            hashcode: s85EPpPFW7CcxygG+30as1FfyRwd3+nMwGYUCy18oz8=
             memorySize: '128'
-            modified: '2018-07-18T09:03:58.749+0000'
+            modified: '2018-07-18T09:28:50.175+0000'
             name: pisensordata
             runtime: nodejs6.10
             timeout: '3'
-            version: Nov8qELHrp7I.sUraTUi2pq5OMePug4q
+            version: iYiWz9yw0SMaUDXfkqLzox2a3mGQ_oGj
           '/pi-sensor-data/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/pisensordata-20180718095915.zip
+            codeFilename: uploads/pisensordata-20180718102556.zip
             description: 'Handler for calls to resource path : /pi-sensor-data/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: MNFutWTeleyplHReQXbrO1789n7b/YqDAYjhAMxORE8=
+            hashcode: s85EPpPFW7CcxygG+30as1FfyRwd3+nMwGYUCy18oz8=
             memorySize: '128'
-            modified: '2018-07-18T09:03:58.749+0000'
+            modified: '2018-07-18T09:28:50.175+0000'
             name: pisensordata
             runtime: nodejs6.10
             timeout: '3'
-            version: b2e.vu6mcSl5LyDZkDaS1NQKGH_YXI1_
+            version: harnXXw1sU3bXVTOd3OvTc6e.nqCCL2c
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true

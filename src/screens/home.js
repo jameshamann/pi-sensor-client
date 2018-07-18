@@ -40,6 +40,15 @@ class Home extends Component {
        return new Date( int_millisec );
    };
 
+   getLatest(){
+     let apiName = 'pi-sensor-dataCRUD';
+     let path = '/latest-reading';
+     API.get(apiName, path).then(response => {
+       console.log(response)
+     }).catch(error => {
+         console.log(error.response)
+     });
+   }
 
   componentDidMount(){
     let apiName = 'pi-sensor-dataCRUD';
@@ -55,6 +64,7 @@ class Home extends Component {
     }).catch(error => {
         console.log(error.response)
     });
+    this.getLatest()
     var date_obj = this.get_date_obj('006f776e-8a59-11e8-b11c-b827eb93cade');
     console.log(date_obj.toLocaleString())
   }

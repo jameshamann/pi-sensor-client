@@ -70,6 +70,10 @@ const convertUrlType = (param, type) => {
  * HTTP Get method for list objects *
  ********************************/
 
+ app.get('/latest-reading', function(req, res) {
+      res.send("HELLO WORLD FROM NEW ROUTE")
+    });
+
 app.get('/pi-sensor-data/:ID', function(req, res) {
      var condition = {}
      condition[partitionKeyName] = {
