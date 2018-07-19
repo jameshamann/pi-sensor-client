@@ -21,7 +21,7 @@ class Home extends Component {
 
   constructor(props){
     super(props);
-    this.state = {temp: '', humidity: '', time_stamp: '', data: ''}
+    this.state = {temp: '', humidity: '', time_stamp: '', data: '', iot: '8a02367a-8b3e-11e8-97bf-b827eb93cade'}
 
   }
 
@@ -41,18 +41,22 @@ class Home extends Component {
        return new Date( int_millisec );
    };
 
+   latestID(){
+     Amplify.addPluggable(new AWSIoTProvider({
+      aws_pubsub_region: 'eu-west-2',
+      aws_pubsub_endpoint: 'wss://azjo7hto1k82k.iot.eu-west-2.amazonaws.com/mqtt',
+    }));
+    PubSub.subscribe('temp_and_humidity').subscribe({
+     next: data => this.setState({iot: data.value.id}),
+     error: error => console.error(error),
+     close: () => console.log('Done'),
+ });
+
+   }
+
   componentDidMount(){
-    Amplify.addPluggable(new AWSIoTProvider({
-     aws_pubsub_region: 'eu-west-2',
-     aws_pubsub_endpoint: 'wss://azjo7hto1k82k.iot.eu-west-2.amazonaws.com/mqtt',
-   }));
-   PubSub.subscribe('temp_and_humidity').subscribe({
-    next: data => console.log('Message received', data),
-    error: error => console.error(error),
-    close: () => console.log('Done'),
-});
     let apiName = 'PiSensorDataCRUD';
-    let path = '/PiSensorData/8a02367a-8b3e-11e8-97bf-b827eb93cade';
+    let path = '/PiSensorData/'+this.state.iot;
     API.get(apiName, path).then(response => {
       console.log(response)
         this.setState({
@@ -64,11 +68,32 @@ class Home extends Component {
     }).catch(error => {
         console.log(error.response)
     });
+    setInterval(() => {
+      let apiName = 'PiSensorDataCRUD';
+      let path = '/PiSensorData/'+this.state.iot;
+      this.latestID()
+      console.log(this.state.iot)
+      API.get(apiName, path).then(response => {
+        console.log(response)
+          this.setState({
+            temp: response[0].payload.temp,
+            humidity: response[0].payload.humidity,
+            time_stamp: response[0].ID,
+            data: response
+          })
+      }).catch(error => {
+          console.log(error.response)
+      });
+    }, 30000);
+
+
+
     var date_obj = this.get_date_obj('8a02367a-8b3e-11e8-97bf-b827eb93cade');
     console.log(date_obj.toLocaleString())
   }
 
   render() {
+    console.log(this.state.iot)
     const graphData = [
       {x: 0, y: 8},
       {x: 1, y: 5},
@@ -94,7 +119,7 @@ class Home extends Component {
       {x: 9, y: 6}
     ];
     const data = this.state.data;
-    const lastReading = this.get_date_obj('8a02367a-8b3e-11e8-97bf-b827eb93cade')
+    const lastReading = this.get_date_obj(this.state.iot)
     return (
     <MuiThemeProvider>
       <AppBar
