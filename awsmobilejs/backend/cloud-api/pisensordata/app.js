@@ -15,22 +15,22 @@ AWS.config.update({ region: process.env.REGION });
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 const mhprefix  = process.env.MOBILE_HUB_DYNAMIC_PREFIX;
-let tableName = "pi-sensor-data";
+let tableName = "PiSensorData";
 const hasDynamicPrefix = true;
 
 const userIdPresent = false;
 const partitionKeyName = "ID";
 const partitionKeyType = "S"
 const sortKeyName = "TimeStamp";
-const sortKeyType = "S";
+const sortKeyType = "N";
 const hasSortKey = true;
-const path = "/pi-sensor-data";
+const path = "/PiSensorData";
 
 const awsmobile = {}
 
 if (hasDynamicPrefix) {
   tableName = mhprefix + '-' + tableName;
-}
+} 
 
 const UNAUTH = 'UNAUTH';
 
@@ -52,67 +52,45 @@ const convertUrlType = (param, type) => {
   }
 }
 
-// res.send("HELLO WORLD!")
-//
-// var iotData = function(data){
-//   console.log("Headline: " + data)
-//   res.send("HELLO DATA" + data);
-// }
-// var myFunc = function(iotData) {
-//    exports.handler = (event, context, iotData) => {
-//            var eventText = JSON.stringify(event, null, 2);
-//            console.log("Received event:", eventText);
-//            iotData(eventText);
-//      };
-//  }
-
 /********************************
  * HTTP Get method for list objects *
  ********************************/
 
- app.get('/latest-reading', function(req, res) {
-   exports.handler = (event, context, callback) => {
-           var eventText = JSON.stringify(event, null, 2);
-           console.log("Received event:", eventText);
-           res.send(eventText)
-        };
-    });
+app.get('/PiSensorData/:ID', function(req, res) {
+  var condition = {}
+  condition[partitionKeyName] = {
+    ComparisonOperator: 'EQ'
+  }
+  
+  if (userIdPresent && req.apiGateway) {
+    condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
+  } else {
+    try {
+      condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
+    } catch(err) {
+      res.json({error: 'Wrong column type ' + err});
+    }
+  }
 
-app.get('/pi-sensor-data/:ID', function(req, res) {
-     var condition = {}
-     condition[partitionKeyName] = {
-       ComparisonOperator: 'EQ'
-     }
+  let queryParams = {
+    TableName: tableName,
+    KeyConditions: condition
+  } 
 
-     if (userIdPresent && req.apiGateway) {
-       condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
-     } else {
-       try {
-         condition[partitionKeyName]['AttributeValueList'] = [ convertUrlType(req.params[partitionKeyName], partitionKeyType) ];
-       } catch(err) {
-         res.json({error: 'Wrong column type ' + err});
-       }
-     }
-
-     let queryParams = {
-       TableName: tableName,
-       KeyConditions: condition
-     }
-
-     dynamodb.query(queryParams, (err, data) => {
-       if (err) {
-         res.json({error: 'Could not load items: ' + err});
-       } else {
-         res.json(data.Items);
-       }
-     });
-   });
+  dynamodb.query(queryParams, (err, data) => {
+    if (err) {
+      res.json({error: 'Could not load items: ' + err});
+    } else {
+      res.json(data.Items);
+    }
+  });
+});
 
 /*****************************************
  * HTTP Get method for get single object *
  *****************************************/
 
-app.get('/pi-sensor-data/object/:ID/:TimeStamp', function(req, res) {
+app.get('/PiSensorData/object/:ID/:TimeStamp', function(req, res) {
   var params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
@@ -156,7 +134,7 @@ app.get('/pi-sensor-data/object/:ID/:TimeStamp', function(req, res) {
 *************************************/
 
 app.put(path, function(req, res) {
-
+  
   if (userIdPresent) {
     req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
@@ -179,7 +157,7 @@ app.put(path, function(req, res) {
 *************************************/
 
 app.post(path, function(req, res) {
-
+  
   if (userIdPresent) {
     req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
@@ -201,7 +179,7 @@ app.post(path, function(req, res) {
 * HTTP remove method to delete object *
 ***************************************/
 
-app.delete('/pi-sensor-data/object/:ID/:TimeStamp', function(req, res) {
+app.delete('/PiSensorData/object/:ID/:TimeStamp', function(req, res) {
   var params = {};
   if (userIdPresent && req.apiGateway) {
     params[partitionKeyName] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;

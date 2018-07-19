@@ -51,8 +51,8 @@ class Home extends Component {
     error: error => console.error(error),
     close: () => console.log('Done'),
 });
-    let apiName = 'pi-sensor-dataCRUD';
-    let path = '/pi-sensor-data/006f776e-8a59-11e8-b11c-b827eb93cade';
+    let apiName = 'PiSensorDataCRUD';
+    let path = '/PiSensorData/8a02367a-8b3e-11e8-97bf-b827eb93cade';
     API.get(apiName, path).then(response => {
       console.log(response)
         this.setState({
@@ -64,7 +64,7 @@ class Home extends Component {
     }).catch(error => {
         console.log(error.response)
     });
-    var date_obj = this.get_date_obj('006f776e-8a59-11e8-b11c-b827eb93cade');
+    var date_obj = this.get_date_obj('8a02367a-8b3e-11e8-97bf-b827eb93cade');
     console.log(date_obj.toLocaleString())
   }
 
@@ -94,7 +94,7 @@ class Home extends Component {
       {x: 9, y: 6}
     ];
     const data = this.state.data;
-    const lastReading = this.get_date_obj('006f776e-8a59-11e8-b11c-b827eb93cade')
+    const lastReading = this.get_date_obj('8a02367a-8b3e-11e8-97bf-b827eb93cade')
     return (
     <MuiThemeProvider>
       <AppBar
