@@ -30,7 +30,7 @@ const awsmobile = {}
 
 if (hasDynamicPrefix) {
   tableName = mhprefix + '-' + tableName;
-} 
+}
 
 const UNAUTH = 'UNAUTH';
 
@@ -61,7 +61,7 @@ app.get('/PiSensorData/:ID', function(req, res) {
   condition[partitionKeyName] = {
     ComparisonOperator: 'EQ'
   }
-  
+
   if (userIdPresent && req.apiGateway) {
     condition[partitionKeyName]['AttributeValueList'] = [req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH ];
   } else {
@@ -134,7 +134,7 @@ app.get('/PiSensorData/object/:ID/:TimeStamp', function(req, res) {
 *************************************/
 
 app.put(path, function(req, res) {
-  
+
   if (userIdPresent) {
     req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
@@ -157,7 +157,7 @@ app.put(path, function(req, res) {
 *************************************/
 
 app.post(path, function(req, res) {
-  
+
   if (userIdPresent) {
     req.body['userId'] = req.apiGateway.event.requestContext.identity.cognitoIdentityId || UNAUTH;
   }
