@@ -21,11 +21,15 @@ class Home extends Component {
 
   constructor(props){
     super(props);
-    this.state = {temp: '', humidity: '', time_stamp: '', data: '', iot: '8a02367a-8b3e-11e8-97bf-b827eb93cade'}
+    this.state = {temp: '', humidity: '', time_stamp: '', data: '', iot: ''}
 
   }
 
   get_time_int = function (uuid_str) {
+
+  if (uuid_str == "") {
+    return "Awaiting Data"
+  } else {
        var uuid_arr = uuid_str.split( '-' ),
            time_str = [
                uuid_arr[ 2 ].substring( 1 ),
@@ -33,12 +37,17 @@ class Home extends Component {
                uuid_arr[ 0 ]
            ].join( '' );
        return parseInt( time_str, 16 );
+     }
    };
 
    get_date_obj = function (uuid_str) {
+     if (uuid_str == "") {
+       return "Awaiting Data"
+     } else {
        var int_time = this.get_time_int( uuid_str ) - 122192928000000000,
            int_millisec = Math.floor( int_time / 10000 );
        return new Date( int_millisec );
+     }
    };
 
    latestID(){
@@ -55,6 +64,7 @@ class Home extends Component {
    }
 
   componentDidMount(){
+    this.latestID()
     let apiName = 'PiSensorDataCRUD';
     let path = '/PiSensorData/'+this.state.iot;
     API.get(apiName, path).then(response => {
@@ -71,7 +81,6 @@ class Home extends Component {
     setInterval(() => {
       let apiName = 'PiSensorDataCRUD';
       let path = '/PiSensorData/'+this.state.iot;
-      this.latestID()
       console.log(this.state.iot)
       API.get(apiName, path).then(response => {
         console.log(response)
@@ -84,11 +93,11 @@ class Home extends Component {
       }).catch(error => {
           console.log(error.response)
       });
-    }, 30000);
+    }, 5000);
 
 
 
-    var date_obj = this.get_date_obj('8a02367a-8b3e-11e8-97bf-b827eb93cade');
+    var date_obj = this.get_date_obj(this.state.iot);
     console.log(date_obj.toLocaleString())
   }
 
