@@ -14,6 +14,7 @@ import Amplify, { API, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import _ from 'lodash'
 import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const uuidv1 = require('uuid/v1');
 
 
@@ -21,7 +22,7 @@ class Home extends Component {
 
   constructor(props){
     super(props);
-    this.state = {temp: '', humidity: '', time_stamp: '', data: '', iot: ''}
+    this.state = {temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: ''}
 
   }
 
@@ -50,7 +51,7 @@ class Home extends Component {
      }
    };
 
-   latestID(){
+  async latestID(){
      Amplify.addPluggable(new AWSIoTProvider({
       aws_pubsub_region: 'eu-west-2',
       aws_pubsub_endpoint: 'wss://azjo7hto1k82k.iot.eu-west-2.amazonaws.com/mqtt',
@@ -61,6 +62,14 @@ class Home extends Component {
      close: () => console.log('Done'),
  });
 
+   }
+
+   setFinishLoading(){
+     if (this.state.data == "") {
+       this.setState({load: ""})
+     } else {
+       this.setState({load: "finished"})
+     }
    }
 
   componentDidMount(){
@@ -79,6 +88,7 @@ class Home extends Component {
         console.log(error.response)
     });
     setInterval(() => {
+      this.setFinishLoading()
       let apiName = 'PiSensorDataCRUD';
       let path = '/PiSensorData/'+this.state.iot;
       console.log(this.state.iot)
@@ -129,6 +139,31 @@ class Home extends Component {
     ];
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)
+    const LoadingProgress = (props) => {
+    const { loading, done, } = props;
+
+      if (done) {
+        return (
+          <CardContent>
+            <Typography gutterBottom variant="headline" component="h2">
+              Tempreature {this.state.temp}˚C
+            </Typography>
+            <Typography gutterBottom variant="headline" component="h2">
+              Humidity {this.state.humidity}%
+            </Typography>
+              <Typography component="p">
+              Last Reading: {lastReading.toLocaleString()}
+              </Typography>
+            </CardContent>
+          );
+      } else {
+        return (
+          <CardContent>
+            <CircularProgress style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} size={50} />
+          </CardContent>
+        );
+      }
+    }
     return (
     <MuiThemeProvider>
       <AppBar
@@ -143,17 +178,10 @@ class Home extends Component {
           </Grid>
           <Grid item xs={6} sm={3}>
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <CardContent>
-            <Typography gutterBottom variant="headline" component="h2">
-              Tempreature {this.state.temp}˚C
-            </Typography>
-            <Typography gutterBottom variant="headline" component="h2">
-              Humidity {this.state.humidity}%
-            </Typography>
-              <Typography component="p">
-              Last Reading: {lastReading.toLocaleString()}
-              </Typography>
-            </CardContent>
+              <LoadingProgress
+                loading={this.state.load}
+                done={this.state.load}
+                />
             <CardActions>
               <Button size="small" color="primary">
                 Share
