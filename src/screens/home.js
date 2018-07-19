@@ -10,7 +10,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Amplify, { API } from 'aws-amplify';
+import Amplify, { API, PubSub } from 'aws-amplify';
+import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import _ from 'lodash'
 import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 const uuidv1 = require('uuid/v1');
@@ -40,17 +41,16 @@ class Home extends Component {
        return new Date( int_millisec );
    };
 
-   getLatest(){
-     let apiName = 'pi-sensor-dataCRUD';
-     let path = '/latest-reading';
-     API.get(apiName, path).then(response => {
-       console.log(response)
-     }).catch(error => {
-         console.log(error.response)
-     });
-   }
-
   componentDidMount(){
+    Amplify.addPluggable(new AWSIoTProvider({
+     aws_pubsub_region: 'eu-west-2',
+     aws_pubsub_endpoint: 'wss://azjo7hto1k82k.iot.eu-west-2.amazonaws.com/mqtt',
+   }));
+   PubSub.subscribe('temp_and_humidity').subscribe({
+    next: data => console.log('Message received', data),
+    error: error => console.error(error),
+    close: () => console.log('Done'),
+});
     let apiName = 'pi-sensor-dataCRUD';
     let path = '/pi-sensor-data/006f776e-8a59-11e8-b11c-b827eb93cade';
     API.get(apiName, path).then(response => {
@@ -64,7 +64,6 @@ class Home extends Component {
     }).catch(error => {
         console.log(error.response)
     });
-    this.getLatest()
     var date_obj = this.get_date_obj('006f776e-8a59-11e8-b11c-b827eb93cade');
     console.log(date_obj.toLocaleString())
   }
