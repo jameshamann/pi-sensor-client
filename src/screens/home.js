@@ -8,16 +8,20 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Amplify, { API } from 'aws-amplify';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Amplify, { API, PubSub } from 'aws-amplify';
+import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import _ from 'lodash'
-const uuid = require('node-uuid')
+import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
+const uuidv1 = require('uuid/v1');
 
 
 class Home extends Component {
 
   constructor(props){
     super(props);
-    this.state = {temp: '', humidity: '', time_stamp: '', data: ''}
+    this.state = {temp: '', humidity: '', time_stamp: '', data: '', iot: '8a02367a-8b3e-11e8-97bf-b827eb93cade'}
 
   }
 
@@ -37,12 +41,24 @@ class Home extends Component {
        return new Date( int_millisec );
    };
 
+   latestID(){
+     Amplify.addPluggable(new AWSIoTProvider({
+      aws_pubsub_region: 'eu-west-2',
+      aws_pubsub_endpoint: 'wss://azjo7hto1k82k.iot.eu-west-2.amazonaws.com/mqtt',
+    }));
+    PubSub.subscribe('temp_and_humidity').subscribe({
+     next: data => this.setState({iot: data.value.id}),
+     error: error => console.error(error),
+     close: () => console.log('Done'),
+ });
+
+   }
 
   componentDidMount(){
-    let apiName = 'pi_sensor_dataCRUD';
-    let path = '/pi_sensor_data/960584e2-8939-11e8-87bc-b827eb93cade';
+    let apiName = 'PiSensorDataCRUD';
+    let path = '/PiSensorData/'+this.state.iot;
     API.get(apiName, path).then(response => {
-      console.log(response[0].payload.temp)
+      console.log(response)
         this.setState({
           temp: response[0].payload.temp,
           humidity: response[0].payload.humidity,
@@ -52,45 +68,108 @@ class Home extends Component {
     }).catch(error => {
         console.log(error.response)
     });
-    var date_obj = this.get_date_obj('960584e2-8939-11e8-87bc-b827eb93cade');
+    setInterval(() => {
+      let apiName = 'PiSensorDataCRUD';
+      let path = '/PiSensorData/'+this.state.iot;
+      this.latestID()
+      console.log(this.state.iot)
+      API.get(apiName, path).then(response => {
+        console.log(response)
+          this.setState({
+            temp: response[0].payload.temp,
+            humidity: response[0].payload.humidity,
+            time_stamp: response[0].ID,
+            data: response
+          })
+      }).catch(error => {
+          console.log(error.response)
+      });
+    }, 30000);
+
+
+
+    var date_obj = this.get_date_obj('8a02367a-8b3e-11e8-97bf-b827eb93cade');
     console.log(date_obj.toLocaleString())
   }
 
   render() {
+    console.log(this.state.iot)
+    const graphData = [
+      {x: 0, y: 8},
+      {x: 1, y: 5},
+      {x: 2, y: 4},
+      {x: 3, y: 9},
+      {x: 4, y: 1},
+      {x: 5, y: 7},
+      {x: 6, y: 6},
+      {x: 7, y: 3},
+      {x: 8, y: 2},
+      {x: 9, y: 0}
+    ];
+    const graphDataTwo = [
+      {x: 0, y: 9},
+      {x: 1, y: 8},
+      {x: 2, y: 6},
+      {x: 3, y: 6},
+      {x: 4, y: 5},
+      {x: 5, y: 4},
+      {x: 6, y: 5},
+      {x: 7, y: 2},
+      {x: 8, y: 1},
+      {x: 9, y: 6}
+    ];
     const data = this.state.data;
-    const lastReading = this.get_date_obj('960584e2-8939-11e8-87bc-b827eb93cade')
+    const lastReading = this.get_date_obj(this.state.iot)
     return (
     <MuiThemeProvider>
       <AppBar
-         title="Dashboard"
+         title="Raspberry Pi Weather Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
       />
-
+      <br />
+      <br />
       <div>
+        <Grid container spacing={24}>
+          <Grid item xs={6} sm={3}>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+          <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <CardContent>
+            <Typography gutterBottom variant="headline" component="h2">
+              Tempreature {this.state.temp}˚C
+            </Typography>
+            <Typography gutterBottom variant="headline" component="h2">
+              Humidity {this.state.humidity}%
+            </Typography>
+              <Typography component="p">
+              Last Reading: {lastReading.toLocaleString()}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" color="primary">
+                Share
+              </Button>
+              <Button size="small" color="primary">
+                Learn More
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+
+      <Grid item xs={6} sm={3}>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <CardContent>
-
-        <Typography gutterBottom variant="headline" component="h2">
-          Tempreature {this.state.temp}˚C
-        </Typography>
-        <Typography gutterBottom variant="headline" component="h2">
-          Humidity {this.state.humidity}%
-        </Typography>
-          <Typography component="p">
-          Last Reading: {lastReading.toLocaleString()}
-          </Typography>
-
-        </CardContent>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
-      </Card>
-      </div>
+        <XYPlot height={300} width={300}>
+        <YAxis hideLine tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+          <XAxis bottom hideLine tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} />
+            <VerticalGridLines />
+            <HorizontalGridLines />
+           <LineSeries data={graphData} />
+          <LineSeries data={graphDataTwo} />
+         </XYPlot>
+        </Card>
+       </Grid>
+     </Grid>
+     </div>
     </MuiThemeProvider>
 
     );
