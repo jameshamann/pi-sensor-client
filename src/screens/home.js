@@ -35,7 +35,11 @@ class Home extends Component {
     }).then(function(weather) {
       console.log(weather)
       self.setState({
-
+        one_day_weather: weather.list[4],
+        two_day_weather: weather.list[9],
+        three_day_weather: weather.list[14],
+        four_day_weather: weather.list[19],
+        five_day_weather: weather.list[24]
         })
     })
   }
@@ -126,38 +130,16 @@ class Home extends Component {
     console.log(date_obj.toLocaleString())
   }
 
+  returnForecastData(forecast){
+    
+  }
+
   render() {
-    console.log(this.state.iot)
-    console.log(this.state.weatherTemp)
-    const graphData = [
-      {x: 0, y: 8},
-      {x: 1, y: 5},
-      {x: 2, y: 4},
-      {x: 3, y: 9},
-      {x: 4, y: 1},
-      {x: 5, y: 7},
-      {x: 6, y: 6},
-      {x: 7, y: 3},
-      {x: 8, y: 2},
-      {x: 9, y: 0}
-    ];
-    const graphDataTwo = [
-      {x: 0, y: 9},
-      {x: 1, y: 8},
-      {x: 2, y: 6},
-      {x: 3, y: 6},
-      {x: 4, y: 5},
-      {x: 5, y: 4},
-      {x: 6, y: 5},
-      {x: 7, y: 2},
-      {x: 8, y: 1},
-      {x: 9, y: 6}
-    ];
+    console.log(this.state.one_day_weather)
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
     const { loading, done, } = props;
-
       if (done) {
         return (
           <CardContent>
@@ -191,7 +173,7 @@ class Home extends Component {
       <br />
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={6} sm={3}>
+          <Grid item xs={2} sm={1}>
           </Grid>
           <Grid item xs={6} sm={3}>
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -210,14 +192,14 @@ class Home extends Component {
           </Card>
         </Grid>
 
-      <Grid item xs={6} sm={3}>
-      <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Grid item xs={12} sm={6}>
+      <Card style={{maxWidth: 600,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardMedia
             src="http://openweathermap.org/img/w/04d.png"
             title="Weather Forecast"
           />
         <CardContent>
-          <Typography>Hello World!</Typography>
+          <Typography>Day One</Typography>
         </CardContent>
         <CardActions>
           <Button size="small" color="primary">
