@@ -22,8 +22,26 @@ class Home extends Component {
 
   constructor(props){
     super(props);
-    this.state = {temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: ''}
+    this.state = {
+      temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: '', weatherTemp: '', weatherDesc: '', weatherIcon: '', weatherSunrise: '', weatherSunset: ''
+    }
+  }
 
+  getWeather(){
+    var self = this;
+    fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=70a4981e434162e1f2eaeacce6268cdc')
+    .then(function(weather) {
+      return weather.json()
+    }).then(function(weather) {
+      console.log(weather)
+      self.setState({
+          weatherTemp: weather.main.temp - 273.15,
+          weatherDesc: weather.weather[0].description,
+          weatherIcon: weather.weather[0].icon,
+          weatherSunrise: weather.sys.sunrise,
+          weatherSunset: weather.sys.sunset
+        })
+    })
   }
 
   get_time_int = function (uuid_str) {
@@ -73,6 +91,7 @@ class Home extends Component {
    }
 
   componentDidMount(){
+    this.getWeather()
     this.latestID()
     let apiName = 'PiSensorDataCRUD';
     let path = '/PiSensorData/'+this.state.iot;
@@ -113,6 +132,7 @@ class Home extends Component {
 
   render() {
     console.log(this.state.iot)
+    console.log(this.state.weatherTemp)
     const graphData = [
       {x: 0, y: 8},
       {x: 1, y: 5},
@@ -194,7 +214,20 @@ class Home extends Component {
         </Grid>
 
       <Grid item xs={6} sm={3}>
-      
+      <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <CardMedia
+            src={"http://openweathermap.org/img/w/" + this.state.weatherIcon + ".png"}
+            title="London Weather"
+          />
+        <CardActions>
+          <Button size="small" color="primary">
+            Share
+          </Button>
+          <Button size="small" color="primary">
+            Learn More
+          </Button>
+        </CardActions>
+        </Card>
        </Grid>
      </Grid>
      </div>
