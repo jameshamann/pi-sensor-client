@@ -23,23 +23,19 @@ class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: '', weatherTemp: '', weatherDesc: '', weatherIcon: '', weatherSunrise: '', weatherSunset: ''
+      temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: '', one_day_weather: '', two_day_weather: '', three_day_weather: '', four_day_weather: '', five_day_weather: ''
     }
   }
 
   getWeather(){
     var self = this;
-    fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=70a4981e434162e1f2eaeacce6268cdc')
+    fetch('http://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=70a4981e434162e1f2eaeacce6268cdc')
     .then(function(weather) {
       return weather.json()
     }).then(function(weather) {
       console.log(weather)
       self.setState({
-          weatherTemp: weather.main.temp - 273.15,
-          weatherDesc: weather.weather[0].description,
-          weatherIcon: weather.weather[0].icon,
-          weatherSunrise: weather.sys.sunrise,
-          weatherSunset: weather.sys.sunset
+
         })
     })
   }
@@ -184,6 +180,7 @@ class Home extends Component {
         );
       }
     }
+    console.log(this.state.weatherIcon)
     return (
     <MuiThemeProvider>
       <AppBar
@@ -216,9 +213,12 @@ class Home extends Component {
       <Grid item xs={6} sm={3}>
       <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardMedia
-            src={"http://openweathermap.org/img/w/" + this.state.weatherIcon + ".png"}
-            title="London Weather"
+            src="http://openweathermap.org/img/w/04d.png"
+            title="Weather Forecast"
           />
+        <CardContent>
+          <Typography>Hello World!</Typography>
+        </CardContent>
         <CardActions>
           <Button size="small" color="primary">
             Share
