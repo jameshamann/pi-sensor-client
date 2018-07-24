@@ -194,16 +194,7 @@ class Home extends Component {
         </Grid>
 
       <Grid item xs={6} sm={3}>
-      <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <XYPlot height={300} width={300}>
-        <YAxis hideLine tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} />
-          <XAxis bottom hideLine tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]} />
-            <VerticalGridLines />
-            <HorizontalGridLines />
-           <LineSeries data={graphData} />
-          <LineSeries data={graphDataTwo} />
-         </XYPlot>
-        </Card>
+      
        </Grid>
      </Grid>
      </div>
