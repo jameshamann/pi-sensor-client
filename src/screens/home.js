@@ -22,30 +22,44 @@ class Home extends Component {
 
   constructor(props){
     super(props);
-    this.getWeather()
+    this.success = this.success.bind(this)
     this.state = {
-      temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: '', one_day_weather: '', two_day_weather: '', three_day_weather: '', four_day_weather: '', five_day_weather: ''
+      geolat: '', geolong: '', temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: '', one_day_weather: '', two_day_weather: '', three_day_weather: '', four_day_weather: '', five_day_weather: ''
     }
   }
 
-  getWeather(){
-    var self = this;
-    fetch('http://api.openweathermap.org/data/2.5/forecast?q=London,uk&appid=70a4981e434162e1f2eaeacce6268cdc')
+  newWeather(){
+    fetch('https://api.apixu.com/v1/forecast.json?key=f01f15ee25ab4951abb154119182507&q=London&days=7')
     .then(function(weather) {
       return weather.json()
     }).then(function(weather) {
       console.log(weather)
-      self.setState({
-        one_day_weather: weather.list[4],
-        two_day_weather: weather.list[9],
-        three_day_weather: weather.list[14],
-        four_day_weather: weather.list[19],
-        five_day_weather: weather.list[24]
-        })
     })
   }
 
-  get_time_int = function (uuid_str) {
+  success(pos){
+  var self = this;
+  this.setState({
+    geolat: pos.coords.latitude,
+    geolong: pos.coords.longitude
+  });
+  fetch('https://api.apixu.com/v1/forecast.json?key=f01f15ee25ab4951abb154119182507&q=' + this.state.geolat + "," + this.state.geolong + '&days=7')
+  .then(function(weather) {
+    return weather.json()
+  }).then(function(weather) {
+    console.log(weather)
+    self.setState({
+        // weatherTemp: weather.main.temp,
+        // weatherDesc: weather.weather[0].description,
+        // weatherCity: weather.name,
+        // weatherIcon: weather.weather[0].icon,
+        // weatherSunrise: weather.sys.sunrise,
+        // weatherSunset: weather.sys.sunset
+      })
+  })
+}
+
+get_time_int = function (uuid_str) {
 
   if (uuid_str == "") {
     return "Awaiting Data"
@@ -92,7 +106,7 @@ class Home extends Component {
    }
 
   componentDidMount(){
-    this.getWeather()
+    navigator.geolocation.getCurrentPosition(this.success)
     this.latestID()
     let apiName = 'PiSensorDataCRUD';
     let path = '/PiSensorData/'+this.state.iot;
@@ -132,17 +146,6 @@ class Home extends Component {
   }
 
   render() {
-    const weather_data = this.state.one_day_weather
-    var temp_data = ""
-    var weather_desc = ""
-    var iconLink = ""
-    _.map(weather_data, ({ clouds, dt, dt_txt, main, sys, weather, wind }) => (
-        temp_data = weather_data.main.temp - 273.15,
-        weather_desc = weather_data.weather[0].main + " " + weather_data.weather[0].description,
-        iconLink = "http://openweathermap.org/img/w/" + weather_data.weather[0].icon + ".png"
-    ))
-    console.log(iconLink)
-    const one_day_weather = this.state.one_day_weather
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
@@ -202,10 +205,6 @@ class Home extends Component {
       <Grid item xs={12} sm={6}>
       <Card style={{maxWidth: 600,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
-          <Typography><img src={iconLink}></img></Typography>
-          <Typography>Day One</Typography>
-          <Typography>{temp_data}</Typography>
-          <Typography>{weather_desc}</Typography>
 
 
         </CardContent>
