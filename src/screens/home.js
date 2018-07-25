@@ -24,7 +24,9 @@ class Home extends Component {
     super(props);
     this.success = this.success.bind(this)
     this.state = {
-      geolat: '', geolong: '', temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: '', one_day_weather: '', two_day_weather: '', three_day_weather: '', four_day_weather: '', five_day_weather: ''
+      geolat: '', geolong: '', temp: '', humidity: '', time_stamp: '', data: '',
+      iot: '', load: '', currWeather: '', oneDayWeather: '', twoDayWeather: '',
+      threeDayWeather: '', fourDayWeather: '', fiveDayWeather: '', sixDayWeather: '', sevenDayWeather: ''
     }
   }
 
@@ -48,12 +50,14 @@ class Home extends Component {
   }).then(function(weather) {
     console.log(weather)
     self.setState({
-        // weatherTemp: weather.main.temp,
-        // weatherDesc: weather.weather[0].description,
-        // weatherCity: weather.name,
-        // weatherIcon: weather.weather[0].icon,
-        // weatherSunrise: weather.sys.sunrise,
-        // weatherSunset: weather.sys.sunset
+        currWeather: weather.current,
+        oneDayWeather: weather.forecast.forecastday[0],
+        twoDayWeather: weather.forecast.forecastday[1],
+        threeDayWeather: weather.forecast.forecastday[2],
+        fourDayWeather: weather.forecast.forecastday[3],
+        fiveDayWeather: weather.forecast.forecastday[4],
+        sixDayWeather: weather.forecast.forecastday[5],
+        sevenDayWeather: weather.forecast.forecastday[6],
       })
   })
 }
@@ -142,6 +146,8 @@ get_time_int = function (uuid_str) {
   }
 
   render() {
+    console.log(this.state.currWeather)
+    console.log(this.state.oneDayWeather.date)
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
@@ -201,7 +207,6 @@ get_time_int = function (uuid_str) {
       <Grid item xs={12} sm={6}>
       <Card style={{maxWidth: 600,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
-
 
         </CardContent>
         <CardActions>
