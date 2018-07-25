@@ -135,11 +135,13 @@ class Home extends Component {
     const weather_data = this.state.one_day_weather
     var temp_data = ""
     var weather_desc = ""
+    var iconLink = ""
     _.map(weather_data, ({ clouds, dt, dt_txt, main, sys, weather, wind }) => (
         temp_data = weather_data.main.temp - 273.15,
-        weather_desc = weather_data.weather[0].main + " " + weather_data.weather[0].description
+        weather_desc = weather_data.weather[0].main + " " + weather_data.weather[0].description,
+        iconLink = "http://openweathermap.org/img/w/" + weather_data.weather[0].icon + ".png"
     ))
-    console.log(weather_desc)
+    console.log(iconLink)
     const one_day_weather = this.state.one_day_weather
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)
@@ -199,11 +201,8 @@ class Home extends Component {
 
       <Grid item xs={12} sm={6}>
       <Card style={{maxWidth: 600,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <CardMedia
-            src="http://openweathermap.org/img/w/04d.png"
-            title="Weather Forecast"
-          />
         <CardContent>
+          <Typography><img src={iconLink}></img></Typography>
           <Typography>Day One</Typography>
           <Typography>{temp_data}</Typography>
           <Typography>{weather_desc}</Typography>

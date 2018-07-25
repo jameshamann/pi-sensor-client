@@ -4782,6 +4782,12 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+material-ui-image@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/material-ui-image/-/material-ui-image-3.0.0.tgz#e7aa6090d2d5fa736aecf6d603b6b3ccceb04fe2"
+  dependencies:
+    prop-types "^15.5.8"
+
 material-ui@^0.20.1:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.20.1.tgz#a0f0f9f801be76a13cf3da9b319a1b97b28925c7"
@@ -7479,7 +7485,7 @@ uuid@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.1.0, uuid@^3.2.1:
+uuid@^3.1.0, uuid@^3.2.1, uuid@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
 
