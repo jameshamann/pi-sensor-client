@@ -36,7 +36,6 @@ class Home extends Component {
       console.log(weather)
     })
   }
-
   success(pos){
   var self = this;
   this.setState({
@@ -138,9 +137,6 @@ get_time_int = function (uuid_str) {
           console.log(error.response)
       });
     }, 5000);
-
-
-
     var date_obj = this.get_date_obj(this.state.iot);
     console.log(date_obj.toLocaleString())
   }
