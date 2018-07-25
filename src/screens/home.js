@@ -22,6 +22,7 @@ class Home extends Component {
 
   constructor(props){
     super(props);
+    this.getWeather()
     this.state = {
       temp: '', humidity: '', time_stamp: '', data: '', iot: '', load: '', one_day_weather: '', two_day_weather: '', three_day_weather: '', four_day_weather: '', five_day_weather: ''
     }
@@ -130,12 +131,16 @@ class Home extends Component {
     console.log(date_obj.toLocaleString())
   }
 
-  returnForecastData(forecast){
-    
-  }
-
   render() {
-    console.log(this.state.one_day_weather)
+    const weather_data = this.state.one_day_weather
+    var temp_data = ""
+    var weather_desc = ""
+    _.map(weather_data, ({ clouds, dt, dt_txt, main, sys, weather, wind }) => (
+        temp_data = weather_data.main.temp - 273.15,
+        weather_desc = weather_data.weather[0].main + " " + weather_data.weather[0].description
+    ))
+    console.log(weather_desc)
+    const one_day_weather = this.state.one_day_weather
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
@@ -200,6 +205,10 @@ class Home extends Component {
           />
         <CardContent>
           <Typography>Day One</Typography>
+          <Typography>{temp_data}</Typography>
+          <Typography>{weather_desc}</Typography>
+
+
         </CardContent>
         <CardActions>
           <Button size="small" color="primary">
