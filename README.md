@@ -20,6 +20,21 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   ]
 }
 
+<img src={this.state.oneDayWeatherIcon}></img>
+<Typography>{this.state.oneDayWeather.date}</Typography>
+<img src={this.state.twoDayWeatherIcon}></img>
+ <Typography>{this.state.twoDayWeather.date}</Typography>
+<img src={this.state.threeDayWeatherIcon}></img>
+ <Typography>{this.state.threeDayWeather.date}</Typography>
+<img src={this.state.fourDayWeatherIcon}></img>
+ <Typography>{this.state.fourDayWeather.date}</Typography>
+<img src={this.state.fiveDayWeatherIcon}></img>
+ <Typography>{this.state.fiveDayWeather.date}</Typography>
+<img src={this.state.sixDayWeatherIcon}></img>
+ <Typography>{this.state.sixDayWeather.date}</Typography>
+<img src={this.state.sevenDayWeatherIcon}></img>
+ <Typography>{this.state.sevenDayWeather.date}</Typography>
+
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 

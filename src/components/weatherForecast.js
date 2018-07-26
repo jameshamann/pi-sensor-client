@@ -16,6 +16,10 @@ import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import _ from 'lodash'
 import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
 const uuidv1 = require('uuid/v1');
 
 
@@ -85,15 +89,38 @@ class WeatherForecast extends Component {
     const { loading, done, } = props;
       if (done) {
         return (
-            <CardContent>
-              <img src={this.state.oneDayWeatherIcon}></img>
-              <img src={this.state.twoDayWeatherIcon}></img>
-              <img src={this.state.threeDayWeatherIcon}></img>
-              <img src={this.state.fourDayWeatherIcon}></img>
-              <img src={this.state.fiveDayWeatherIcon}></img>
-              <img src={this.state.sixDayWeatherIcon}></img>
-              <img src={this.state.sevenDayWeatherIcon}></img>
-            </CardContent>
+          <GridList>
+
+                   <GridListTile style={{width: '64', height: '64'}}>
+                     <img src={this.state.oneDayWeatherIcon} />
+                     <Typography>Hello!</Typography>
+                   </GridListTile>
+                   <GridListTile style={{width: '64', height: '64'}}>
+                     <img src={this.state.twoDayWeatherIcon} />
+                     <Typography>Hello!</Typography>
+                   </GridListTile>
+                   <GridListTile style={{width: '64', height: '64'}}>
+                     <img src={this.state.threeDayWeatherIcon} />
+                     <Typography>Hello!</Typography>
+                   </GridListTile>
+                   <GridListTile style={{width: '64', height: '64'}}>
+                     <img src={this.state.fourDayWeatherIcon} />
+                     <Typography>Hello!</Typography>
+                   </GridListTile>
+                   <GridListTile style={{width: '64', height: '64'}}>
+                     <img src={this.state.fiveDayWeatherIcon} />
+                     <Typography>Hello!</Typography>
+                   </GridListTile>
+                   <GridListTile style={{width: '64', height: '64'}}>
+                     <img src={this.state.sixDayWeatherIcon} />
+                     <Typography>Hello!</Typography>
+                   </GridListTile>
+                   <GridListTile style={{width: '64', height: '64'}}>
+                     <img src={this.state.sevenDayWeatherIcon} />
+                     <Typography>Hello!</Typography>
+                   </GridListTile>
+
+               </GridList>
           );
       } else {
         return (
@@ -103,13 +130,15 @@ class WeatherForecast extends Component {
         );
       }
     }
-    console.log(this.state.oneDayWeather.day)
+    console.log(this.state.oneDayWeatherIcon)
     return (
-      <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Card style={{maxWidth: 690,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <CardContent>
           <LoadingProgress
             loading={this.state.load}
             done={this.state.load}
             />
+        </CardContent>
         <CardActions>
           <Button size="small" color="primary">
             Share
