@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
@@ -39,8 +40,9 @@ class WeatherForecast extends Component {
   .then(function(weather) {
     return weather.json()
   }).then(function(weather) {
-    console.log(weather)
+    self.props.getWeather(weather.current)
     self.setState({
+        currWeatherIcon: weather.current.condition.icon,
         currWeather: weather.current,
         oneDayWeather: weather.forecast.forecastday[0],
         twoDayWeather: weather.forecast.forecastday[1],
@@ -58,14 +60,15 @@ class WeatherForecast extends Component {
        this.setState({load: ""})
      } else {
        this.setState({load: "finished"})
+       var currentWeather = this.state.currWeather
      }
    }
 
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(this.success)
     this.setFinishLoading()
+    console.log(this.state.currWeather)
     setInterval(() => {
-        console.log("Im a Timer")
     }, 5000);
   }
 
@@ -92,7 +95,6 @@ class WeatherForecast extends Component {
         );
       }
     }
-    console.log(this.state.currWeather)
     console.log(this.state.oneDayWeather.date)
     console.log(this.state.weatherIcon)
     return (

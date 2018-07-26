@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { PropTypes } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
@@ -23,7 +24,24 @@ const uuidv1 = require('uuid/v1');
 
 class Home extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {currWeather: ''}
+    this.nowWeather = this.nowWeather.bind(this);
+
+  }
+
+  nowWeather = (currWeather) => {
+    this.setState({currWeather: currWeather})
+
+  }
+
+  componentDidMount(){
+    this.nowWeather()
+  }
+
   render() {
+    console.log(this.state.currWeather)
     return (
     <MuiThemeProvider>
       <AppBar
@@ -37,10 +55,10 @@ class Home extends Component {
           <Grid item xs={2} sm={1}>
           </Grid>
           <Grid item xs={6} sm={3}>
-            <PiSensor/>
+            <PiSensor currWeather={this.state.currWeather}/>
         </Grid>
       <Grid item xs={12} sm={6}>
-        <WeatherForecast />
+        <WeatherForecast getWeather={this.nowWeather} />
        </Grid>
      </Grid>
      </div>
