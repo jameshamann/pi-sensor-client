@@ -41,9 +41,15 @@ class WeatherForecast extends Component {
     return weather.json()
   }).then(function(weather) {
     self.props.getWeather(weather.current)
+    self.setFinishLoading()
     self.setState({
-        currWeatherIcon: weather.current.condition.icon,
-        currWeather: weather.current,
+        oneDayWeatherIcon: weather.forecast.forecastday[0].day.condition.icon,
+        twoDayWeatherIcon: weather.forecast.forecastday[1].day.condition.icon,
+        threeDayWeatherIcon: weather.forecast.forecastday[2].day.condition.icon,
+        fourDayWeatherIcon: weather.forecast.forecastday[3].day.condition.icon,
+        fiveDayWeatherIcon: weather.forecast.forecastday[4].day.condition.icon,
+        sixDayWeatherIcon: weather.forecast.forecastday[5].day.condition.icon,
+        sevenDayWeatherIcon: weather.forecast.forecastday[6].day.condition.icon,
         oneDayWeather: weather.forecast.forecastday[0],
         twoDayWeather: weather.forecast.forecastday[1],
         threeDayWeather: weather.forecast.forecastday[2],
@@ -66,7 +72,6 @@ class WeatherForecast extends Component {
 
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(this.success)
-    this.setFinishLoading()
     console.log(this.state.currWeather)
     setInterval(() => {
     }, 5000);
@@ -74,17 +79,20 @@ class WeatherForecast extends Component {
 
 
   render() {
+    console.log(this.state.oneDayWeather.day)
+    const dayOne = this.state.oneDayWeather.day
     const LoadingProgress = (props) => {
     const { loading, done, } = props;
       if (done) {
         return (
-          <CardContent>
-            <Typography gutterBottom variant="headline" component="h2">
-            </Typography>
-            <Typography gutterBottom variant="headline" component="h2">
-            </Typography>
-              <Typography component="p">
-              </Typography>
+            <CardContent>
+              <img src={this.state.oneDayWeatherIcon}></img>
+              <img src={this.state.twoDayWeatherIcon}></img>
+              <img src={this.state.threeDayWeatherIcon}></img>
+              <img src={this.state.fourDayWeatherIcon}></img>
+              <img src={this.state.fiveDayWeatherIcon}></img>
+              <img src={this.state.sixDayWeatherIcon}></img>
+              <img src={this.state.sevenDayWeatherIcon}></img>
             </CardContent>
           );
       } else {
@@ -95,13 +103,13 @@ class WeatherForecast extends Component {
         );
       }
     }
-    console.log(this.state.oneDayWeather.date)
-    console.log(this.state.weatherIcon)
+    console.log(this.state.oneDayWeather.day)
     return (
-      <Card style={{maxWidth: 600,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <CardContent>
-
-        </CardContent>
+      <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <LoadingProgress
+            loading={this.state.load}
+            done={this.state.load}
+            />
         <CardActions>
           <Button size="small" color="primary">
             Share
@@ -110,7 +118,8 @@ class WeatherForecast extends Component {
             Learn More
           </Button>
         </CardActions>
-        </Card>
+      </Card>
+
     );
   }
 }
