@@ -89,38 +89,18 @@ class WeatherForecast extends Component {
     const { loading, done, } = props;
       if (done) {
         return (
-          <GridList>
-
-                   <GridListTile style={{width: '64', height: '64'}}>
+            <div>   <Typography>Hello
                      <img src={this.state.oneDayWeatherIcon} />
-                     <Typography>Hello!</Typography>
-                   </GridListTile>
-                   <GridListTile style={{width: '64', height: '64'}}>
+                        Hello 2
                      <img src={this.state.twoDayWeatherIcon} />
-                     <Typography>Hello!</Typography>
-                   </GridListTile>
-                   <GridListTile style={{width: '64', height: '64'}}>
                      <img src={this.state.threeDayWeatherIcon} />
-                     <Typography>Hello!</Typography>
-                   </GridListTile>
-                   <GridListTile style={{width: '64', height: '64'}}>
                      <img src={this.state.fourDayWeatherIcon} />
-                     <Typography>Hello!</Typography>
-                   </GridListTile>
-                   <GridListTile style={{width: '64', height: '64'}}>
                      <img src={this.state.fiveDayWeatherIcon} />
-                     <Typography>Hello!</Typography>
-                   </GridListTile>
-                   <GridListTile style={{width: '64', height: '64'}}>
                      <img src={this.state.sixDayWeatherIcon} />
-                     <Typography>Hello!</Typography>
-                   </GridListTile>
-                   <GridListTile style={{width: '64', height: '64'}}>
                      <img src={this.state.sevenDayWeatherIcon} />
-                     <Typography>Hello!</Typography>
-                   </GridListTile>
+                     </Typography>
 
-               </GridList>
+           </div>
           );
       } else {
         return (
