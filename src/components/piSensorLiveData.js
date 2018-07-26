@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import AppBar from 'material-ui/AppBar';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,59 +7,23 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import Amplify, { API, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import _ from 'lodash'
-import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import WeatherForecast from '../components/weatherForecast'
-const uuidv1 = require('uuid/v1');
 
 
-class Home extends Component {
+class PiSensor extends Component {
 
   constructor(props){
     super(props);
     this.success = this.success.bind(this)
     this.state = {
-      geolat: '', geolong: '', temp: '', humidity: '', time_stamp: '', data: '',
-      iot: '', load: '', currWeather: '', oneDayWeather: '', twoDayWeather: '',
-      threeDayWeather: '', fourDayWeather: '', fiveDayWeather: '', sixDayWeather: '', sevenDayWeather: ''
+      temp: '', humidity: '', time_stamp: '', data: '',
+      iot: '', load: ''
     }
   }
-
-  newWeather(){
-    fetch('https://api.apixu.com/v1/forecast.json?key=f01f15ee25ab4951abb154119182507&q=London&days=7')
-    .then(function(weather) {
-      return weather.json()
-    }).then(function(weather) {
-      console.log(weather)
-    })
-  }
-  success(pos){
-  var self = this;
-  this.setState({
-    geolat: pos.coords.latitude,
-    geolong: pos.coords.longitude
-  });
-  fetch('https://api.apixu.com/v1/forecast.json?key=f01f15ee25ab4951abb154119182507&q=' + this.state.geolat + "," + this.state.geolong + '&days=7')
-  .then(function(weather) {
-    return weather.json()
-  }).then(function(weather) {
-    console.log(weather)
-    self.setState({
-        currWeather: weather.current,
-        oneDayWeather: weather.forecast.forecastday[0],
-        twoDayWeather: weather.forecast.forecastday[1],
-        threeDayWeather: weather.forecast.forecastday[2],
-        fourDayWeather: weather.forecast.forecastday[3],
-        fiveDayWeather: weather.forecast.forecastday[4],
-        sixDayWeather: weather.forecast.forecastday[5],
-        sevenDayWeather: weather.forecast.forecastday[6],
-      })
-  })
-}
 
 get_time_int = function (uuid_str) {
 
@@ -110,7 +72,6 @@ get_time_int = function (uuid_str) {
    }
 
   componentDidMount(){
-    navigator.geolocation.getCurrentPosition(this.success)
     this.latestID()
     let apiName = 'PiSensorDataCRUD';
     let path = '/PiSensorData/'+this.state.iot;
@@ -147,8 +108,6 @@ get_time_int = function (uuid_str) {
   }
 
   render() {
-    console.log(this.state.currWeather)
-    console.log(this.state.oneDayWeather.date)
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
@@ -177,18 +136,6 @@ get_time_int = function (uuid_str) {
     }
     console.log(this.state.weatherIcon)
     return (
-    <MuiThemeProvider>
-      <AppBar
-         title="Raspberry Pi Weather Dashboard"
-         iconClassNameRight="muidocs-icon-navigation-expand-more"
-      />
-      <br />
-      <br />
-      <div>
-        <Grid container spacing={24}>
-          <Grid item xs={2} sm={1}>
-          </Grid>
-          <Grid item xs={6} sm={3}>
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <LoadingProgress
                 loading={this.state.load}
@@ -203,29 +150,8 @@ get_time_int = function (uuid_str) {
               </Button>
             </CardActions>
           </Card>
-        </Grid>
-
-      <Grid item xs={12} sm={6}>
-      <Card style={{maxWidth: 600,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <CardContent>
-
-        </CardContent>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
-        </Card>
-       </Grid>
-     </Grid>
-     </div>
-    </MuiThemeProvider>
-
-    );
+        );
   }
 }
 
-export default Home;
+export default PiSensor;

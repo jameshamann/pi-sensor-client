@@ -66,40 +66,32 @@ class WeatherForecast extends Component {
     this.setFinishLoading()
     setInterval(() => {
         console.log("Im a Timer")
-      }).catch(error => {
-          console.log(error.response)
-      });
     }, 5000);
-    var date_obj = this.get_date_obj(this.state.iot);
-    console.log(date_obj.toLocaleString())
   }
 
-  const LoadingProgress = (props) => {
-  const { loading, done, } = props;
-    if (done) {
-      return (
-        <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-            Tempreature {this.state.temp}˚C
-          </Typography>
-          <Typography gutterBottom variant="headline" component="h2">
-            Humidity {this.state.humidity}%
-          </Typography>
-            <Typography component="p">
-            Last Reading: {lastReading.toLocaleString()}
-            </Typography>
-          </CardContent>
-        );
-    } else {
-      return (
-        <CardContent>
-          <CircularProgress style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} size={50} />
-        </CardContent>
-      );
-    }
-  }
 
   render() {
+    const LoadingProgress = (props) => {
+    const { loading, done, } = props;
+      if (done) {
+        return (
+          <CardContent>
+            <Typography gutterBottom variant="headline" component="h2">
+            </Typography>
+            <Typography gutterBottom variant="headline" component="h2">
+            </Typography>
+              <Typography component="p">
+              </Typography>
+            </CardContent>
+          );
+      } else {
+        return (
+          <CardContent>
+            <CircularProgress style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} size={50} />
+          </CardContent>
+        );
+      }
+    }
     console.log(this.state.currWeather)
     console.log(this.state.oneDayWeather.date)
     console.log(this.state.weatherIcon)
