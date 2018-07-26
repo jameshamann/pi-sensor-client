@@ -107,6 +107,30 @@ get_time_int = function (uuid_str) {
     console.log(date_obj.toLocaleString())
   }
 
+  success(pos){
+  var self = this;
+  this.setState({
+    geolat: pos.coords.latitude,
+    geolong: pos.coords.longitude
+  });
+  fetch('https://api.apixu.com/v1/forecast.json?key=f01f15ee25ab4951abb154119182507&q=' + this.state.geolat + "," + this.state.geolong + '&days=7')
+  .then(function(weather) {
+    return weather.json()
+  }).then(function(weather) {
+    console.log(weather)
+    self.setState({
+        currWeather: weather.current,
+        oneDayWeather: weather.forecast.forecastday[0],
+        twoDayWeather: weather.forecast.forecastday[1],
+        threeDayWeather: weather.forecast.forecastday[2],
+        fourDayWeather: weather.forecast.forecastday[3],
+        fiveDayWeather: weather.forecast.forecastday[4],
+        sixDayWeather: weather.forecast.forecastday[5],
+        sevenDayWeather: weather.forecast.forecastday[6],
+      })
+  })
+}
+
   render() {
     const data = this.state.data;
     const lastReading = this.get_date_obj(this.state.iot)

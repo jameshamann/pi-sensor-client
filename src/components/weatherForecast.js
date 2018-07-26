@@ -96,7 +96,19 @@ class WeatherForecast extends Component {
     console.log(this.state.oneDayWeather.date)
     console.log(this.state.weatherIcon)
     return (
-     <Typography>Hello World</Typography>
+      <Card style={{maxWidth: 600,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <CardContent>
+
+        </CardContent>
+        <CardActions>
+          <Button size="small" color="primary">
+            Share
+          </Button>
+          <Button size="small" color="primary">
+            Learn More
+          </Button>
+        </CardActions>
+        </Card>
     );
   }
 }
