@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { PropTypes } from 'react'
 import RaisedButton from 'material-ui/RaisedButton';
 import Card from '@material-ui/core/Card';
+import Avatar from '@material-ui/core/Avatar';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +15,7 @@ import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import _ from 'lodash'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import WeatherForecast from '../components/weatherForecast'
-
+import BuildIcon from '@material-ui/icons/Build';
 
 class PiSensor extends Component {
 
@@ -110,20 +112,28 @@ get_time_int = function (uuid_str) {
 
   render() {
     const data = this.state.data;
+    console.log(this.props.currWeather)
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
     const { loading, done, } = props;
       if (done) {
         return (
           <CardContent>
-              <img src={this.props.currWeather.condition.icon}></img>
-            <Typography gutterBottom variant="headline" component="h2">
-              Tempreature {this.state.temp}˚C
+            <CardHeader
+              title="Current Weather"
+              subheader="Live Data provided by Pi Sensors"
+              />
+            <div style={{marginLeft: "8px"}}>
+              <img width="64" height="64" src={this.props.currWeather.condition.icon}></img>
+            </div>
+            <Typography component="p" style={{marginLeft: "25px"}}>{this.props.currWeather.condition.text}, Feels Like: {this.props.currWeather.feelslike_c}˚C</Typography>
+            <Typography component="p" style={{marginLeft: "25px"}}>
+              Tempreature: {this.state.temp}˚C
             </Typography>
-            <Typography gutterBottom variant="headline" component="h2">
-              Humidity {this.state.humidity}%
+            <Typography component="p" style={{marginLeft: "25px"}}>
+              Humidity: {this.state.humidity}%
             </Typography>
-              <Typography component="p">
+              <Typography component="p" style={{marginLeft: "25px"}}>
               Last Reading: {lastReading.toLocaleString()}
               </Typography>
             </CardContent>
@@ -131,7 +141,7 @@ get_time_int = function (uuid_str) {
       } else {
         return (
           <CardContent>
-            <CircularProgress style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} size={50} />
+            <CircularProgress size={50} style={{justifyContent: 'center', alignItems: 'center'}} size={50} />
           </CardContent>
         );
       }
