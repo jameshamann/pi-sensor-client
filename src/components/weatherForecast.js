@@ -89,16 +89,37 @@ class WeatherForecast extends Component {
     const { loading, done, } = props;
       if (done) {
         return (
-            <div>   <Typography>Hello
-                     <img src={this.state.oneDayWeatherIcon} />
-                        Hello 2
-                     <img src={this.state.twoDayWeatherIcon} />
-                     <img src={this.state.threeDayWeatherIcon} />
-                     <img src={this.state.fourDayWeatherIcon} />
-                     <img src={this.state.fiveDayWeatherIcon} />
-                     <img src={this.state.sixDayWeatherIcon} />
-                     <img src={this.state.sevenDayWeatherIcon} />
-                     </Typography>
+        <div>
+          <Grid container spacing={24}>
+                <Grid item xs={1.5}>
+                  <img src={this.state.oneDayWeatherIcon} />
+                  <Typography>Day of the week</Typography>
+                </Grid>
+                <Grid item xs={1.5}>
+                  <img src={this.state.twoDayWeatherIcon} />
+                </Grid>
+                <Grid item xs={1.5}>
+                  <img src={this.state.threeDayWeatherIcon} />
+                </Grid>
+                <Grid item xs={1.5}>
+                  <img src={this.state.fourDayWeatherIcon} />
+
+                </Grid>
+                <Grid item xs={1.5}>
+                  <img src={this.state.fiveDayWeatherIcon} />
+
+                </Grid>
+                <Grid item xs={1.5}>
+                  <img src={this.state.sixDayWeatherIcon} />
+
+                </Grid>
+                <Grid item xs={1.5}>
+                  <img src={this.state.sevenDayWeatherIcon} />
+
+                </Grid>
+              </Grid>
+
+
 
            </div>
           );
