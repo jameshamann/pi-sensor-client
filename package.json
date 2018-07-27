@@ -11,9 +11,11 @@
     "lodash": "^4.17.10",
     "material-ui": "^0.20.1",
     "material-ui-image": "^3.0.0",
+    "moment": "^2.22.2",
     "node-uuid": "^1.4.8",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-moment": "^0.7.9",
     "react-scripts": "1.1.4",
     "react-vis": "^1.10.3",
     "uuid": "^3.3.2"

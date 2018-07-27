@@ -111,7 +111,10 @@ get_time_int = function (uuid_str) {
 
 
   render() {
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     const data = this.state.data;
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var today  = new Date();
     console.log(this.props.currWeather)
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
@@ -121,7 +124,7 @@ get_time_int = function (uuid_str) {
           <CardContent>
             <CardHeader
               title="Current Weather"
-              subheader="Live Data provided by Pi Sensors"
+              subheader={today.toLocaleDateString("en-US", options)}
               />
             <div style={{marginLeft: "8px"}}>
               <img width="64" height="64" src={this.props.currWeather.condition.icon}></img>
