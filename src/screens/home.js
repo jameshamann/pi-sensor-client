@@ -52,7 +52,9 @@ class Home extends Component {
       <br />
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={2} sm={1}>
+          <Grid item xs={3} sm={1}>
+          </Grid>
+          <Grid item xs={3} sm={1}>
           </Grid>
           <Grid item xs={6} sm={3}>
             <PiSensor currWeather={this.state.currWeather}/>
