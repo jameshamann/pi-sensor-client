@@ -7,6 +7,8 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardHeader from '@material-ui/core/CardHeader';
+
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -41,7 +43,7 @@ class WeatherForecast extends Component {
     geolat: pos.coords.latitude,
     geolong: pos.coords.longitude
   });
-  fetch('https://api.apixu.com/v1/forecast.json?key=f01f15ee25ab4951abb154119182507&q=' + this.state.geolat + "," + this.state.geolong + '&days=7')
+  fetch('https://api.apixu.com/v1/forecast.json?key=f01f15ee25ab4951abb154119182507&q=' + this.state.geolat + "," + this.state.geolong + '&days=5')
   .then(function(weather) {
     return weather.json()
   }).then(function(weather) {
@@ -53,15 +55,16 @@ class WeatherForecast extends Component {
         threeDayWeatherIcon: weather.forecast.forecastday[2].day.condition.icon,
         fourDayWeatherIcon: weather.forecast.forecastday[3].day.condition.icon,
         fiveDayWeatherIcon: weather.forecast.forecastday[4].day.condition.icon,
-        sixDayWeatherIcon: weather.forecast.forecastday[5].day.condition.icon,
-        sevenDayWeatherIcon: weather.forecast.forecastday[6].day.condition.icon,
+        oneDayWeatherText: weather.forecast.forecastday[0].day.condition.text,
+        twoDayWeatherText: weather.forecast.forecastday[1].day.condition.text,
+        threeDayWeatherText: weather.forecast.forecastday[2].day.condition.text,
+        fourDayWeatherText: weather.forecast.forecastday[3].day.condition.text,
+        fiveDayWeatherText: weather.forecast.forecastday[4].day.condition.text,
         oneDayWeather: weather.forecast.forecastday[0],
         twoDayWeather: weather.forecast.forecastday[1],
         threeDayWeather: weather.forecast.forecastday[2],
         fourDayWeather: weather.forecast.forecastday[3],
         fiveDayWeather: weather.forecast.forecastday[4],
-        sixDayWeather: weather.forecast.forecastday[5],
-        sevenDayWeather: weather.forecast.forecastday[6]
       })
     })
   }
@@ -94,31 +97,28 @@ class WeatherForecast extends Component {
           <Grid container spacing={24}>
                 <Grid item xs={1.5}>
                   <img src={this.state.oneDayWeatherIcon} />
-                  <Typography component="p">{moment().add(1, 'days').calendar().slice(0, -11)}</Typography>
+                  <Typography variant="subheading">{moment().add(1, 'days').calendar().slice(0, -11)}</Typography>
+                  <Typography variant="caption">{this.state.oneDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.twoDayWeatherIcon} />
-                    <Typography component="p">{moment().add(2, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(2, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="caption">{this.state.twoDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.threeDayWeatherIcon} />
-                    <Typography component="p">{moment().add(3, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(3, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="caption">{this.state.threeDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.fourDayWeatherIcon} />
-                    <Typography component="p">{moment().add(4, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(4, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="caption">{this.state.fourDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.fiveDayWeatherIcon} />
-                    <Typography component="p">{moment().add(5, 'days').calendar().slice(0, -11)}</Typography>
-                </Grid>
-                <Grid item xs={1.5}>
-                  <img src={this.state.sixDayWeatherIcon} />
-                    <Typography component="p">{moment().add(5, 'days').calendar().slice(0, -11)}</Typography>
-                </Grid>
-                <Grid item xs={1.5}>
-                  <img src={this.state.sevenDayWeatherIcon} />
-                    <Typography component="p">{moment().add(6, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(5, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="caption">{this.state.fiveDayWeatherText}</Typography>
                 </Grid>
               </Grid>
 
@@ -138,6 +138,10 @@ class WeatherForecast extends Component {
     return (
       <Card style={{maxWidth: 690,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
+          <CardHeader
+            title="5 Day Weather Forecast"
+            subheader="Forecast data provided by Apixu"
+            />
           <LoadingProgress
             loading={this.state.load}
             done={this.state.load}
