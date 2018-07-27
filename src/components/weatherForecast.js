@@ -126,9 +126,6 @@ class WeatherForecast extends Component {
                     <Typography variant="caption">{this.state.fiveDayWeatherText}</Typography>
                 </Grid>
               </Grid>
-
-
-
            </div>
           );
       } else {
@@ -161,7 +158,6 @@ class WeatherForecast extends Component {
           </Button>
         </CardActions>
       </Card>
-
     );
   }
 }
