@@ -60,6 +60,11 @@ class WeatherForecast extends Component {
         threeDayWeatherText: weather.forecast.forecastday[2].day.condition.text,
         fourDayWeatherText: weather.forecast.forecastday[3].day.condition.text,
         fiveDayWeatherText: weather.forecast.forecastday[4].day.condition.text,
+        oneDayWeatherAveTemp: weather.forecast.forecastday[0].day.avgtemp_c,
+        twoDayWeatherAveTemp: weather.forecast.forecastday[1].day.avgtemp_c,
+        threeDayWeatherAveTemp: weather.forecast.forecastday[2].day.avgtemp_c,
+        fourDayWeatherAveTemp: weather.forecast.forecastday[3].day.avgtemp_c,
+        fiveDayWeatherAveTemp: weather.forecast.forecastday[4].day.avgtemp_c,
         oneDayWeather: weather.forecast.forecastday[0],
         twoDayWeather: weather.forecast.forecastday[1],
         threeDayWeather: weather.forecast.forecastday[2],
@@ -97,27 +102,27 @@ class WeatherForecast extends Component {
           <Grid container spacing={24}>
                 <Grid item xs={1.5}>
                   <img src={this.state.oneDayWeatherIcon} />
-                  <Typography variant="subheading">{moment().add(1, 'days').calendar().slice(0, -11)}</Typography>
+                  <Typography variant="subheading">{moment().add(1, 'days').calendar().slice(0, -11) + " " + this.state.oneDayWeatherAveTemp}˚C</Typography>
                   <Typography variant="caption">{this.state.oneDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.twoDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(2, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(2, 'days').calendar().slice(0, -11) + " " + this.state.twoDayWeatherAveTemp}˚C</Typography>
                     <Typography variant="caption">{this.state.twoDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.threeDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(3, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(3, 'days').calendar().slice(0, -11) + " " + this.state.threeDayWeatherAveTemp}˚C</Typography>
                     <Typography variant="caption">{this.state.threeDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.fourDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(4, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(4, 'days').calendar().slice(0, -11) + " " + this.state.fourDayWeatherAveTemp}˚C</Typography>
                     <Typography variant="caption">{this.state.fourDayWeatherText}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.fiveDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(5, 'days').calendar().slice(0, -11)}</Typography>
+                    <Typography variant="subheading">{moment().add(5, 'days').calendar().slice(0, -11) + " " + this.state.fiveDayWeatherAveTemp}˚C</Typography>
                     <Typography variant="caption">{this.state.fiveDayWeatherText}</Typography>
                 </Grid>
               </Grid>
@@ -136,7 +141,7 @@ class WeatherForecast extends Component {
     }
     console.log(this.state.oneDayWeatherIcon)
     return (
-      <Card style={{maxWidth: 690,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Card style={{maxWidth: 700,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
           <CardHeader
             title="5 Day Weather Forecast"
