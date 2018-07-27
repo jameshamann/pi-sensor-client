@@ -5,6 +5,7 @@ import Home from './screens/home.js'
 import '../node_modules/react-vis/dist/style.css';
 import Amplify, { Auth } from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
+import Moment from 'react-moment';
 import awsmobile from './aws-exports';
 Amplify.configure(awsmobile);
 
