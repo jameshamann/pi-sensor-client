@@ -20,6 +20,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import moment from 'moment'
 const uuidv1 = require('uuid/v1');
 
 
@@ -93,29 +94,31 @@ class WeatherForecast extends Component {
           <Grid container spacing={24}>
                 <Grid item xs={1.5}>
                   <img src={this.state.oneDayWeatherIcon} />
-                  <Typography>Day of the week</Typography>
+                  <Typography component="p">{moment().add(1, 'days').calendar().slice(0, -11)}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.twoDayWeatherIcon} />
+                    <Typography component="p">{moment().add(2, 'days').calendar().slice(0, -11)}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.threeDayWeatherIcon} />
+                    <Typography component="p">{moment().add(3, 'days').calendar().slice(0, -11)}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.fourDayWeatherIcon} />
-
+                    <Typography component="p">{moment().add(4, 'days').calendar().slice(0, -11)}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.fiveDayWeatherIcon} />
-
+                    <Typography component="p">{moment().add(5, 'days').calendar().slice(0, -11)}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.sixDayWeatherIcon} />
-
+                    <Typography component="p">{moment().add(5, 'days').calendar().slice(0, -11)}</Typography>
                 </Grid>
                 <Grid item xs={1.5}>
                   <img src={this.state.sevenDayWeatherIcon} />
-
+                    <Typography component="p">{moment().add(6, 'days').calendar().slice(0, -11)}</Typography>
                 </Grid>
               </Grid>
 
