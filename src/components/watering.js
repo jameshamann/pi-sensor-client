@@ -22,14 +22,14 @@ class Watering extends Component {
   constructor(props){
     super(props);
     this.state = {
-      temp: '', humidity: '', time_stamp: '', data: '',
+      temp: '', humidity: '', time_stamp: '', data: 'Test',
       iot: '', load: ''
     }
   }
 
 
    setFinishLoading(){
-     if (this.state.data == "") {
+     if (this.props.currWeather == "") {
        this.setState({load: ""})
      } else {
        this.setState({load: "finished"})
@@ -40,6 +40,7 @@ class Watering extends Component {
 
     setInterval(() => {
       this.setFinishLoading()
+
     }, 5000);
   }
 
@@ -54,13 +55,13 @@ class Watering extends Component {
         return (
           <CardContent>
             <CardHeader
-              title="Current Rain"
-              subheader="Rain Forecast"
+              title="Watering?"
+              subheader=""
               />
             <div style={{marginLeft: "8px"}}>
             </div>
             <Typography component="p" style={{marginLeft: "25px"}}>
-              "Hello"
+              {this.props.currWeather.precip_mm}
             </Typography>
             </CardContent>
           );

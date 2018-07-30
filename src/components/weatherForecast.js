@@ -92,7 +92,7 @@ class WeatherForecast extends Component {
 
 
   render() {
-    console.log(this.state.oneDayWeather.day)
+    console.log(this.state.currWeather)
     const dayOne = this.state.oneDayWeather.day
     const LoadingProgress = (props) => {
     const { loading, done, } = props;

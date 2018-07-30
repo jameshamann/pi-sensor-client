@@ -53,23 +53,23 @@ class Home extends Component {
       <br />
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={3} sm={1}>
+          <Grid item xs={6} sm={2}>
           </Grid>
-          <Grid item xs={3} sm={1}>
+          <Grid item xs={6} sm={1}>
           </Grid>
           <Grid item xs={6} sm={3}>
             <PiSensor currWeather={this.state.currWeather}/>
-        </Grid>
-      <Grid item xs={12} sm={6}>
-        <WeatherForecast getWeather={this.nowWeather} />
-       </Grid>
-       <Grid item xs={3} sm={1}>
-       </Grid>
-       <Grid item xs={3} sm={1}>
-       </Grid>
-       <Grid item xs={6} sm={3}>
-         <Watering />
-     </Grid>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+                <Watering currWeather={this.state.currWeather} />
+           </Grid>
+         <Grid item xs={12} sm={10}>
+         </Grid>
+         <Grid item xs={6} sm={3}>
+         </Grid>
+         <Grid item xs={12} sm={6}>
+           <WeatherForecast getWeather={this.nowWeather} />
+         </Grid>
      </Grid>
      </div>
     </MuiThemeProvider>

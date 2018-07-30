@@ -136,6 +136,9 @@ get_time_int = function (uuid_str) {
             <Typography component="p" style={{marginLeft: "25px"}}>
               Humidity: {this.state.humidity}%
             </Typography>
+            <Typography component="p" style={{marginLeft: "25px"}}>
+              Rainfall: {this.props.currWeather.precip_mm} + " mm(s)" 
+            </Typography>
               <Typography component="p" style={{marginLeft: "25px"}}>
               Last Reading: {lastReading.toLocaleString()}
               </Typography>
