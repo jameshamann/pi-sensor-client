@@ -18,6 +18,7 @@ import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis
 import CircularProgress from '@material-ui/core/CircularProgress';
 import WeatherForecast from '../components/weatherForecast'
 import PiSensor from '../components/piSensorLiveData'
+import Watering from '../components/watering'
 
 const uuidv1 = require('uuid/v1');
 
@@ -62,6 +63,13 @@ class Home extends Component {
       <Grid item xs={12} sm={6}>
         <WeatherForecast getWeather={this.nowWeather} />
        </Grid>
+       <Grid item xs={3} sm={1}>
+       </Grid>
+       <Grid item xs={3} sm={1}>
+       </Grid>
+       <Grid item xs={6} sm={3}>
+         <Watering />
+     </Grid>
      </Grid>
      </div>
     </MuiThemeProvider>
