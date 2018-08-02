@@ -25,6 +25,7 @@ class Watering extends Component {
       temp: '', humidity: '', time_stamp: '', data: 'Test',
       iot: '', load: ''
     }
+    this.setWateringStatus = this.setWateringStatus.bind(this)
   }
 
 
@@ -40,8 +41,17 @@ class Watering extends Component {
 
     setInterval(() => {
       this.setFinishLoading()
-
+      this.setWateringStatus(this.props.currWeather.precip_mm)
     }, 5000);
+  }
+
+  setWateringStatus(precip){
+    console.log(precip)
+    if (precip == 0) {
+      console.log("Water your Plants!")
+    } else {
+      console.log("Rain is forecast")
+    }
   }
 
 
@@ -49,6 +59,7 @@ class Watering extends Component {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var today  = new Date();
+
     const LoadingProgress = (props) => {
     const { loading, done, } = props;
       if (done) {
