@@ -15,7 +15,7 @@ import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
 import _ from 'lodash'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import WeatherForecast from '../components/weatherForecast'
-import BuildIcon from '@material-ui/icons/Build';
+import CloudyIcon from '@material-ui/icons/Cloud';
 
 class Watering extends Component {
 
@@ -50,7 +50,7 @@ class Watering extends Component {
     if (precip == 0) {
       return (
           <Typography variant="subheading" style={{marginLeft: "25px"}}>
-            {precip} mms Rainfall Expected Today.
+            {precip} mms Rainfall Expected Today. <br />
             Water your plants!
         </Typography>
       )
@@ -75,6 +75,11 @@ class Watering extends Component {
             <CardHeader
               title="Rain Forecast"
               subheader="Watering Requirement"
+              avatar={
+              <Avatar>
+                <CloudyIcon />
+              </Avatar>
+            }
               />
             <div style={{marginLeft: "8px"}}>
             </div>
