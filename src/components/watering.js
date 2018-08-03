@@ -48,9 +48,16 @@ class Watering extends Component {
   setWateringStatus(precip){
     console.log(precip)
     if (precip == 0) {
-      console.log("Water your Plants!")
+      return (
+          <Typography variant="subheading" style={{marginLeft: "25px"}}>
+            {precip} mms Rainfall Expected Today.
+            Water your plants!
+        </Typography>
+      )
     } else {
-      console.log("Rain is forecast")
+      return (
+        <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, there is no need to water your plants.</Typography>
+      )
     }
   }
 
@@ -66,14 +73,12 @@ class Watering extends Component {
         return (
           <CardContent>
             <CardHeader
-              title="Watering?"
-              subheader=""
+              title="Rain Forecast"
+              subheader="Watering Requirement"
               />
             <div style={{marginLeft: "8px"}}>
             </div>
-            <Typography component="p" style={{marginLeft: "25px"}}>
-              {this.props.currWeather.precip_mm}
-            </Typography>
+              {this.setWateringStatus(this.props.currWeather.precip_mm)}
             </CardContent>
           );
       } else {
