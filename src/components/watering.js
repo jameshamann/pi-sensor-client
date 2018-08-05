@@ -16,6 +16,11 @@ import _ from 'lodash'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import WeatherForecast from '../components/weatherForecast'
 import CloudyIcon from '@material-ui/icons/Cloud';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 class Watering extends Component {
 
@@ -70,8 +75,59 @@ class Watering extends Component {
       if (done) {
         return (
           <CardContent>
-
             <div style={{marginLeft: "8px"}}>
+              <Table>
+               <TableHead>
+                 <TableRow>
+                   <TableCell>Watering Sector</TableCell>
+                   <TableCell numeric>Soil Moisture (mms)</TableCell>
+                   <TableCell numeric>Last Watered</TableCell>
+                   <TableCell numeric>Amount Watered (mms)</TableCell>
+                   <TableCell numeric>Last Harvest</TableCell>
+
+                 </TableRow>
+               </TableHead>
+               <TableBody>
+                   <TableRow>
+                     <TableCell component="th" scope="row">
+                       Corn
+                     </TableCell>
+                     <TableCell numeric>0.47</TableCell>
+                     <TableCell numeric>06/07/18</TableCell>
+                     <TableCell numeric>1.78</TableCell>
+                     <TableCell date>06/07/18</TableCell>
+
+                   </TableRow>
+                   <TableRow>
+                     <TableCell component="th" scope="row">
+                       Onions
+                     </TableCell>
+                     <TableCell numeric>0.89</TableCell>
+                     <TableCell numeric>06/07/18</TableCell>
+                     <TableCell numeric>1.3</TableCell>
+                     <TableCell date>06/07/18</TableCell>
+
+                   </TableRow>
+                   <TableRow>
+                     <TableCell component="th" scope="row">
+                       Peppers
+                     </TableCell>
+                     <TableCell numeric>0.34</TableCell>
+                     <TableCell numeric>06/07/18</TableCell>
+                     <TableCell numeric>1.4</TableCell>
+                     <TableCell date>06/07/18</TableCell>
+                   </TableRow>
+                   <TableRow>
+                     <TableCell component="th" scope="row">
+                       Tomatoes
+                     </TableCell>
+                     <TableCell numeric>0.56</TableCell>
+                     <TableCell numeric>06/07/18</TableCell>
+                     <TableCell numeric>2.5</TableCell>
+                     <TableCell date>06/07/18</TableCell>
+                   </TableRow>
+               </TableBody>
+             </Table>
             </div>
             </CardContent>
           );
@@ -84,10 +140,10 @@ class Watering extends Component {
       }
     }
     return (
-          <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Card style={{maxWidth: 1035,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
-              title="Automated Watering System"
-              subheader="Raspberry Pi System Status"
+              title="Farming Crop Breakdown"
+              subheader="Data provided from Raspberry Pi"
               />
               <LoadingProgress
                 loading={this.state.load}
