@@ -50,7 +50,7 @@ class Watering extends Component {
     if (precip == 0) {
       return (
           <Typography variant="subheading" style={{marginLeft: "25px"}}>
-            
+
         </Typography>
       )
     } else {
@@ -70,11 +70,7 @@ class Watering extends Component {
       if (done) {
         return (
           <CardContent>
-            <CardHeader
-              title="Watering System Status"
-              subheader={this.props.currWeather.precip_mm + "mm(s) of rain forecast for today"}
 
-              />
             <div style={{marginLeft: "8px"}}>
             </div>
               {this.setWateringStatus(this.props.currWeather.precip_mm)}
@@ -90,6 +86,10 @@ class Watering extends Component {
     }
     return (
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <CardHeader
+              title="Automated Watering System"
+              subheader="Raspberry Pi System Status"
+              />
               <LoadingProgress
                 loading={this.state.load}
                 done={this.state.load}

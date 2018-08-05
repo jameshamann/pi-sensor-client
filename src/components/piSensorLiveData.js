@@ -122,10 +122,7 @@ get_time_int = function (uuid_str) {
       if (done) {
         return (
           <CardContent>
-            <CardHeader
-              title="Current Weather"
-              subheader={today.toLocaleDateString("en-US", options)}
-              />
+
             <div style={{marginLeft: "8px"}}>
               <img width="64" height="64" src={this.props.currWeather.condition.icon}></img>
             </div>
@@ -142,7 +139,13 @@ get_time_int = function (uuid_str) {
               <Typography component="p" style={{marginLeft: "25px"}}>
               Last Reading: {lastReading.toLocaleString().substring(12)}
               </Typography>
+              <CardActions>
+                <Button size="small" color="primary">
+                  View 5 day Weather Forecast
+                </Button>
+              </CardActions>
             </CardContent>
+
           );
       } else {
         return (
@@ -155,6 +158,10 @@ get_time_int = function (uuid_str) {
     console.log(this.state.weatherIcon)
     return (
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <CardHeader
+              title="Current Weather"
+              subheader={today.toLocaleDateString("en-US", options)}
+              />
               <LoadingProgress
                 loading={this.state.load}
                 done={this.state.load}
