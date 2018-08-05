@@ -142,8 +142,8 @@ class Watering extends Component {
     return (
           <Card style={{maxWidth: 1035,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
-              title="Farming Crop Breakdown"
-              subheader="Data provided from Raspberry Pi"
+              title="Farming System"
+              subheader="Current Status: Live"
               />
               <LoadingProgress
                 loading={this.state.load}
