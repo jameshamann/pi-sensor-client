@@ -137,7 +137,7 @@ get_time_int = function (uuid_str) {
               Humidity: {this.state.humidity}%
             </Typography>
             <Typography component="p" style={{marginLeft: "25px"}}>
-              Rainfall: {this.props.currWeather.precip_mm} + " mm(s)" 
+              Rainfall: {this.props.currWeather.precip_mm} + " mm(s)"
             </Typography>
               <Typography component="p" style={{marginLeft: "25px"}}>
               Last Reading: {lastReading.toLocaleString()}
@@ -159,14 +159,7 @@ get_time_int = function (uuid_str) {
                 loading={this.state.load}
                 done={this.state.load}
                 />
-            <CardActions>
-              <Button size="small" color="primary">
-                Share
-              </Button>
-              <Button size="small" color="primary">
-                Learn More
-              </Button>
-            </CardActions>
+            
           </Card>
         );
   }
