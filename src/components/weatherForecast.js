@@ -23,6 +23,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import moment from 'moment'
+import Grow from '@material-ui/core/Grow';
 const uuidv1 = require('uuid/v1');
 
 
@@ -33,9 +34,10 @@ class WeatherForecast extends Component {
     this.success = this.success.bind(this)
     this.state = {
       geolat: '', geolong: '', currWeather: '', oneDayWeather: '', twoDayWeather: '',
-      threeDayWeather: '', fourDayWeather: '', fiveDayWeather: '', sixDayWeather: '', sevenDayWeather: ''
+      threeDayWeather: '', fourDayWeather: '', fiveDayWeather: '', sixDayWeather: '', sevenDayWeather: '', checked: false
     }
   }
+
 
   success(pos){
   var self = this;
@@ -96,37 +98,39 @@ class WeatherForecast extends Component {
     const dayOne = this.state.oneDayWeather.day
     const LoadingProgress = (props) => {
     const { loading, done, } = props;
+    const { checked } = this.state;
       if (done) {
         return (
-        <div>
-          <Grid container spacing={24}>
-                <Grid item xs={1.5}>
-                  <img src={this.state.oneDayWeatherIcon} />
-                  <Typography variant="subheading">{moment().add(1, 'days').calendar().slice(0, -11) + " " + this.state.oneDayWeatherAveTemp}˚C</Typography>
-                  <Typography variant="caption">{this.state.oneDayWeatherText}</Typography>
+
+          <div>
+            <Grid container spacing={24}>
+                  <Grid item xs={1.5}>
+                    <img src={this.state.oneDayWeatherIcon} />
+                    <Typography variant="subheading">{moment().add(1, 'days').calendar().slice(0, -11) + " " + this.state.oneDayWeatherAveTemp}˚C</Typography>
+                    <Typography variant="caption">{this.state.oneDayWeatherText}</Typography>
+                  </Grid>
+                  <Grid item xs={1.5}>
+                    <img src={this.state.twoDayWeatherIcon} />
+                      <Typography variant="subheading">{moment().add(2, 'days').calendar().slice(0, -11) + " " + this.state.twoDayWeatherAveTemp}˚C</Typography>
+                      <Typography variant="caption">{this.state.twoDayWeatherText}</Typography>
+                  </Grid>
+                  <Grid item xs={1.5}>
+                    <img src={this.state.threeDayWeatherIcon} />
+                      <Typography variant="subheading">{moment().add(3, 'days').calendar().slice(0, -11) + " " + this.state.threeDayWeatherAveTemp}˚C</Typography>
+                      <Typography variant="caption">{this.state.threeDayWeatherText}</Typography>
+                  </Grid>
+                  <Grid item xs={1.5}>
+                    <img src={this.state.fourDayWeatherIcon} />
+                      <Typography variant="subheading">{moment().add(4, 'days').calendar().slice(0, -11) + " " + this.state.fourDayWeatherAveTemp}˚C</Typography>
+                      <Typography variant="caption">{this.state.fourDayWeatherText}</Typography>
+                  </Grid>
+                  <Grid item xs={1.5}>
+                    <img src={this.state.fiveDayWeatherIcon} />
+                      <Typography variant="subheading">{moment().add(5, 'days').calendar().slice(0, -11) + " " + this.state.fiveDayWeatherAveTemp}˚C</Typography>
+                      <Typography variant="caption">{this.state.fiveDayWeatherText}</Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={1.5}>
-                  <img src={this.state.twoDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(2, 'days').calendar().slice(0, -11) + " " + this.state.twoDayWeatherAveTemp}˚C</Typography>
-                    <Typography variant="caption">{this.state.twoDayWeatherText}</Typography>
-                </Grid>
-                <Grid item xs={1.5}>
-                  <img src={this.state.threeDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(3, 'days').calendar().slice(0, -11) + " " + this.state.threeDayWeatherAveTemp}˚C</Typography>
-                    <Typography variant="caption">{this.state.threeDayWeatherText}</Typography>
-                </Grid>
-                <Grid item xs={1.5}>
-                  <img src={this.state.fourDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(4, 'days').calendar().slice(0, -11) + " " + this.state.fourDayWeatherAveTemp}˚C</Typography>
-                    <Typography variant="caption">{this.state.fourDayWeatherText}</Typography>
-                </Grid>
-                <Grid item xs={1.5}>
-                  <img src={this.state.fiveDayWeatherIcon} />
-                    <Typography variant="subheading">{moment().add(5, 'days').calendar().slice(0, -11) + " " + this.state.fiveDayWeatherAveTemp}˚C</Typography>
-                    <Typography variant="caption">{this.state.fiveDayWeatherText}</Typography>
-                </Grid>
-              </Grid>
-           </div>
+             </div>
           );
       } else {
         return (
@@ -136,8 +140,8 @@ class WeatherForecast extends Component {
         );
       }
     }
-    console.log(this.state.oneDayWeatherIcon)
     return (
+
       <Card style={{maxWidth: 700,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
           <CardHeader
@@ -149,8 +153,9 @@ class WeatherForecast extends Component {
             done={this.state.load}
             />
         </CardContent>
-      
+
       </Card>
+
     );
   }
 }

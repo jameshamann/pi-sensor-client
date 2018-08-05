@@ -41,7 +41,7 @@ class Watering extends Component {
 
     setInterval(() => {
       this.setFinishLoading()
-      this.setWateringStatus(this.props.currWeather.precip_mm)
+      // this.setWateringStatus(this.props.currWeather.precip_mm)
     }, 5000);
   }
 
@@ -73,7 +73,6 @@ class Watering extends Component {
 
             <div style={{marginLeft: "8px"}}>
             </div>
-              {this.setWateringStatus(this.props.currWeather.precip_mm)}
             </CardContent>
           );
       } else {
