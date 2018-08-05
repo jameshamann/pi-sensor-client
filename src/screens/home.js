@@ -65,10 +65,10 @@ class Home extends Component {
          <Grid item xs={6} sm={2}>
          </Grid>
          <Grid item xs={6} sm={3}>
-           <Watering />
+           <Watering currWeather={this.state.currWeather} />
          </Grid>
          <Grid item xs={12} sm={6}>
-             <CropTable currWeather={this.state.currWeather} />
+             <CropTable />
          </Grid>
      </Grid>
      </div>

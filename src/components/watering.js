@@ -27,6 +27,7 @@ class Watering extends Component {
   constructor(props){
     super(props);
     this.state = {load: ''}
+    this.setWateringStatus = this.setWateringStatus.bind(this)
   }
 
 
@@ -46,8 +47,20 @@ class Watering extends Component {
     }, 5000);
   }
 
-
-
+  setWateringStatus(precip){
+    console.log(precip)
+    if (precip == 0) {
+      return (
+          <Typography variant="subheading" style={{marginLeft: "25px"}}>
+            No Rainfall Predicted for Today. Watering will be required.
+        </Typography>
+      )
+    } else {
+      return (
+        <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, there is no need to water your plants.</Typography>
+      )
+    }
+  }
 
   render() {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -58,18 +71,7 @@ class Watering extends Component {
       if (done) {
         return (
           <CardContent>
-            <div style={{marginLeft: "8px"}}>
-              </div>
-              <Typography component="p" style={{marginLeft: "25px"}}></Typography>
-              <Typography component="p" style={{marginLeft: "25px"}}>
-              </Typography>
-              <Typography component="p" style={{marginLeft: "25px"}}>
-              </Typography>
-              <Typography component="p" style={{marginLeft: "25px"}}>
-              </Typography>
-                <Typography component="p" style={{marginLeft: "25px"}}>
-
-                </Typography>
+            {this.setWateringStatus(this.props.currWeather.precip_mm)}
             </CardContent>
           );
       } else {
