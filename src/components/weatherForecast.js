@@ -142,7 +142,7 @@ class WeatherForecast extends Component {
     }
     return (
 
-      <Card style={{maxWidth: 700,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Card style={{maxWidth: 690,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <CardContent>
           <CardHeader
             title="5 Day Weather Forecast"

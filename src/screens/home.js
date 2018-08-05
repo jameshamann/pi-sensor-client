@@ -19,6 +19,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import WeatherForecast from '../components/weatherForecast'
 import PiSensor from '../components/piSensorLiveData'
 import Watering from '../components/watering'
+import CropTable from '../components/cropTable'
+
 const uuidv1 = require('uuid/v1');
 
 
@@ -62,8 +64,11 @@ class Home extends Component {
            </Grid>
          <Grid item xs={6} sm={2}>
          </Grid>
+         <Grid item xs={6} sm={3}>
+           <Watering />
+         </Grid>
          <Grid item xs={12} sm={6}>
-             <Watering currWeather={this.state.currWeather} />
+             <CropTable currWeather={this.state.currWeather} />
          </Grid>
      </Grid>
      </div>

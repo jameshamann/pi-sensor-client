@@ -26,11 +26,7 @@ class Watering extends Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      temp: '', humidity: '', time_stamp: '', data: 'Test',
-      iot: '', load: ''
-    }
-    this.setWateringStatus = this.setWateringStatus.bind(this)
+    this.state = {load: ''}
   }
 
 
@@ -50,20 +46,7 @@ class Watering extends Component {
     }, 5000);
   }
 
-  setWateringStatus(precip){
-    console.log(precip)
-    if (precip == 0) {
-      return (
-          <Typography variant="subheading" style={{marginLeft: "25px"}}>
 
-        </Typography>
-      )
-    } else {
-      return (
-        <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, there is no need to water your plants.</Typography>
-      )
-    }
-  }
 
 
   render() {
@@ -76,59 +59,17 @@ class Watering extends Component {
         return (
           <CardContent>
             <div style={{marginLeft: "8px"}}>
-              <Table>
-               <TableHead>
-                 <TableRow>
-                   <TableCell>Watering Sector</TableCell>
-                   <TableCell numeric>Soil Moisture (mms)</TableCell>
-                   <TableCell numeric>Last Watered</TableCell>
-                   <TableCell numeric>Amount Watered (mms)</TableCell>
-                   <TableCell numeric>Last Harvest</TableCell>
+              </div>
+              <Typography component="p" style={{marginLeft: "25px"}}></Typography>
+              <Typography component="p" style={{marginLeft: "25px"}}>
+              </Typography>
+              <Typography component="p" style={{marginLeft: "25px"}}>
+              </Typography>
+              <Typography component="p" style={{marginLeft: "25px"}}>
+              </Typography>
+                <Typography component="p" style={{marginLeft: "25px"}}>
 
-                 </TableRow>
-               </TableHead>
-               <TableBody>
-                   <TableRow>
-                     <TableCell component="th" scope="row">
-                       Corn
-                     </TableCell>
-                     <TableCell numeric>0.47</TableCell>
-                     <TableCell numeric>06/07/18</TableCell>
-                     <TableCell numeric>1.78</TableCell>
-                     <TableCell date>06/07/18</TableCell>
-
-                   </TableRow>
-                   <TableRow>
-                     <TableCell component="th" scope="row">
-                       Onions
-                     </TableCell>
-                     <TableCell numeric>0.89</TableCell>
-                     <TableCell numeric>06/07/18</TableCell>
-                     <TableCell numeric>1.3</TableCell>
-                     <TableCell date>06/07/18</TableCell>
-
-                   </TableRow>
-                   <TableRow>
-                     <TableCell component="th" scope="row">
-                       Peppers
-                     </TableCell>
-                     <TableCell numeric>0.34</TableCell>
-                     <TableCell numeric>06/07/18</TableCell>
-                     <TableCell numeric>1.4</TableCell>
-                     <TableCell date>06/07/18</TableCell>
-                   </TableRow>
-                   <TableRow>
-                     <TableCell component="th" scope="row">
-                       Tomatoes
-                     </TableCell>
-                     <TableCell numeric>0.56</TableCell>
-                     <TableCell numeric>06/07/18</TableCell>
-                     <TableCell numeric>2.5</TableCell>
-                     <TableCell date>06/07/18</TableCell>
-                   </TableRow>
-               </TableBody>
-             </Table>
-            </div>
+                </Typography>
             </CardContent>
           );
       } else {
@@ -140,10 +81,10 @@ class Watering extends Component {
       }
     }
     return (
-          <Card style={{maxWidth: 1035,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Card style={{maxWidth: 690,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
-              title="Farming System"
-              subheader="Current Status: Live"
+              title="Watering Status"
+              subheader="Current Status: Live, Last Reading: 12:00"
               />
               <LoadingProgress
                 loading={this.state.load}
