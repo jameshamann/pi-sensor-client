@@ -81,7 +81,7 @@ class Watering extends Component {
       }
     }
     return (
-          <Card style={{maxWidth: 690,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
               title="Watering Status"
               subheader="Current Status: Live, Last Reading: 12:00"
