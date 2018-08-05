@@ -50,8 +50,7 @@ class Watering extends Component {
     if (precip == 0) {
       return (
           <Typography variant="subheading" style={{marginLeft: "25px"}}>
-            {precip} mms Rainfall Expected Today. <br />
-            Water your plants!
+            
         </Typography>
       )
     } else {
@@ -66,20 +65,15 @@ class Watering extends Component {
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var today  = new Date();
-
     const LoadingProgress = (props) => {
     const { loading, done, } = props;
       if (done) {
         return (
           <CardContent>
             <CardHeader
-              title="Rain Forecast"
-              subheader="Watering Requirement"
-              avatar={
-              <Avatar>
-                <CloudyIcon />
-              </Avatar>
-            }
+              title="Watering System Status"
+              subheader={this.props.currWeather.precip_mm + "mm(s) of rain forecast for today"}
+
               />
             <div style={{marginLeft: "8px"}}>
             </div>
@@ -100,7 +94,7 @@ class Watering extends Component {
                 loading={this.state.load}
                 done={this.state.load}
                 />
-          
+
           </Card>
         );
   }
