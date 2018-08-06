@@ -57,13 +57,15 @@ class Watering extends Component {
           <Grid container spacing={24}>
             <Grid item>
                 <Typography>
-                    No Rainfall Predicted for Today. Watering will be required.
+                    No Rainfall Predicted for Today, watering will be automated.
+                    If more is required, water flow can be controlled below.
+                    Monitor moisture and watering amount to ensure crops are not over watered.
                 </Typography>
             </Grid>
             <Grid item xs={1.2}>
                 <Button variant="contained" color="primary">
                   Start Watering
-                </Button>    
+                </Button>
             </Grid>
           <Grid item xs={1.2}>
             <Button variant="contained" color="primary">
@@ -75,7 +77,10 @@ class Watering extends Component {
       )
     } else {
       return (
-        <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, there is no need to water your plants.</Typography>
+        <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, watering will not take place.
+          If more is required, water flow can be controlled below.
+          Monitor moisture and watering amount to ensure crops are not over watered.
+        </Typography>
       )
     }
   }
