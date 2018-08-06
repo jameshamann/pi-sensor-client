@@ -21,6 +21,10 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 
 class CropTable extends Component {
 
@@ -129,7 +133,13 @@ class CropTable extends Component {
                </TableBody>
              </Table>
             </div>
-            </CardContent>
+            <br />
+            <Tooltip title="Add Crops" style={{marginLeft: "50px;", position: 'absolute', fontSize: "10px;"}}>
+               <Button variant="fab" color="blue" aria-label="Add Crops">
+                 <AddIcon />
+               </Button>
+            </Tooltip>
+          </CardContent>
           );
       } else {
         return (

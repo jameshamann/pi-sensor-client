@@ -21,6 +21,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Grid from '@material-ui/core/Grid';
+import GridList from '@material-ui/core/GridList';
 
 class Watering extends Component {
 
@@ -51,9 +53,25 @@ class Watering extends Component {
     console.log(precip)
     if (precip == 0) {
       return (
-          <Typography variant="subheading" style={{marginLeft: "25px"}}>
-            No Rainfall Predicted for Today. Watering will be required.
-        </Typography>
+        <CardContent>
+          <Grid container spacing={24}>
+            <Grid item>
+                <Typography>
+                    No Rainfall Predicted for Today. Watering will be required.
+                </Typography>
+            </Grid>
+            <Grid item xs={1.2}>
+                <Button variant="contained" color="primary">
+                  Start Watering
+                </Button>    
+            </Grid>
+          <Grid item xs={1.2}>
+            <Button variant="contained" color="primary">
+              End Watering
+            </Button>
+          </Grid>
+          </Grid>
+        </CardContent>
       )
     } else {
       return (
@@ -70,9 +88,10 @@ class Watering extends Component {
     const { loading, done, } = props;
       if (done) {
         return (
-          <CardContent>
+          <div style={{marginRight: "3  0px"}}>
             {this.setWateringStatus(this.props.currWeather.precip_mm)}
-            </CardContent>
+          </div>
+
           );
       } else {
         return (
@@ -92,7 +111,6 @@ class Watering extends Component {
                 loading={this.state.load}
                 done={this.state.load}
                 />
-
           </Card>
         );
   }
