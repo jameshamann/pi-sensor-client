@@ -56,9 +56,12 @@ class Watering extends Component {
         <CardContent>
           <Grid container spacing={24}>
             <Grid item>
-                <Typography>
-                    No Rainfall Predicted for Today, watering will be automated.
-                    If more is required, water flow can be controlled below.
+                <Typography variant="headline">
+                    No Rainfall predicted for today, watering is required.
+                </Typography>
+                <br />
+                <Typography variant='subheading'>
+                    Watering will be automated, if more is required water flow can be controlled below using the relevant buttons.
                     Monitor moisture and watering amount to ensure crops are not over watered.
                 </Typography>
             </Grid>
