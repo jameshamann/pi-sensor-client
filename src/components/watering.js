@@ -91,7 +91,7 @@ class Watering extends Component {
     var today  = new Date();
     const LoadingProgress = (props) => {
     const { loading, done, } = props;
-      if (done) {
+      if (done && this.props.currWeather != null) {
         return (
           <div style={{marginRight: "3  0px"}}>
             {this.setWateringStatus(this.props.currWeather.precip_mm)}
