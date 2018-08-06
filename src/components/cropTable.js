@@ -152,7 +152,7 @@ class CropTable extends Component {
     return (
           <Card style={{maxWidth: 690,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
-              title="Farming System"
+              title="Crop Breakdown"
               subheader="Current Status: Live, Last Reading: 12:00"
               />
               <LoadingProgress
