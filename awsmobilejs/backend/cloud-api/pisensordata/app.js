@@ -75,7 +75,7 @@ app.get('/PiSensorData/:ID', function(req, res) {
   let queryParams = {
     TableName: tableName,
     KeyConditions: condition
-  } 
+  }
 
   dynamodb.query(queryParams, (err, data) => {
     if (err) {

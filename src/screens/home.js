@@ -18,6 +18,8 @@ import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis
 import CircularProgress from '@material-ui/core/CircularProgress';
 import WeatherForecast from '../components/weatherForecast'
 import PiSensor from '../components/piSensorLiveData'
+import Watering from '../components/watering'
+import CropTable from '../components/cropTable'
 
 const uuidv1 = require('uuid/v1');
 
@@ -52,16 +54,22 @@ class Home extends Component {
       <br />
       <div>
         <Grid container spacing={24}>
-          <Grid item xs={3} sm={1}>
+          <Grid item xs={1} sm={2}>
           </Grid>
-          <Grid item xs={3} sm={1}>
+          <Grid item xs={1} sm={3}>
+            <PiSensor currWeather={this.state.currWeather} showFiveDayForecast={this.showForecast}/>
           </Grid>
-          <Grid item xs={6} sm={3}>
-            <PiSensor currWeather={this.state.currWeather}/>
-        </Grid>
-      <Grid item xs={12} sm={6}>
-        <WeatherForecast getWeather={this.nowWeather} />
-       </Grid>
+          <Grid item xs={1} sm={6}>
+            <WeatherForecast getWeather={this.nowWeather} />
+           </Grid>
+         <Grid item xs={1} sm={2}>
+         </Grid>
+         <Grid item xs={1} sm={3}>
+           <Watering currWeather={this.state.currWeather} />
+         </Grid>
+         <Grid item xs={1} sm={6}>
+             <CropTable />
+         </Grid>
      </Grid>
      </div>
     </MuiThemeProvider>
