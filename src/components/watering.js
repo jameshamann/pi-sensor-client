@@ -42,6 +42,8 @@ class Watering extends Component {
    }
 
   componentDidMount(){
+    PubSub.publish('myTopic1', { msg: 'Hello to all subscribers!' });
+
 
     setInterval(() => {
       this.setFinishLoading()

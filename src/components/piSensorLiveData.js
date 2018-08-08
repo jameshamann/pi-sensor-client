@@ -123,20 +123,20 @@ get_time_int = function (uuid_str) {
         return (
           <CardContent>
 
-            <div style={{marginLeft: "8px"}}>
+            <div>
               <img width="64" height="64" src={this.props.currWeather.condition.icon}></img>
             </div>
-            <Typography component="p" style={{marginLeft: "25px"}}>{this.props.currWeather.condition.text}, Feels Like: {this.props.currWeather.feelslike_c}˚C</Typography>
-            <Typography component="p" style={{marginLeft: "25px"}}>
+            <Typography component="p">{this.props.currWeather.condition.text}, Feels Like: {this.props.currWeather.feelslike_c}˚C</Typography>
+            <Typography component="p">
               Tempreature: {this.state.temp}˚C
             </Typography>
-            <Typography component="p" style={{marginLeft: "25px"}}>
+            <Typography component="p">
               Humidity: {this.state.humidity}%
             </Typography>
-            <Typography component="p" style={{marginLeft: "25px"}}>
+            <Typography component="p">
               Predicted Rainfall: {this.props.currWeather.precip_mm} mm(s)
             </Typography>
-              <Typography component="p" style={{marginLeft: "25px"}}>
+              <Typography component="p">
               Last Reading: {lastReading.toLocaleString().substring(12)}
               </Typography>
             </CardContent>
