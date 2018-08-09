@@ -78,14 +78,31 @@ class Watering extends Component {
             </Button>
           </Grid>
           </Grid>
-        </CardContent>
+      </CardContent>
       )
     } else {
       return (
+    <CardContent>
+      <Grid container spacing={24}>
+        <Grid item>
         <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, watering will not take place.
           If more is required, water flow can be controlled below.
           Monitor moisture and watering amount to ensure crops are not over watered.
         </Typography>
+      </Grid>
+
+        <Grid item xs={1.2}>
+            <Button variant="contained" color="primary">
+              Start Watering
+            </Button>
+        </Grid>
+      <Grid item xs={1.2}>
+        <Button variant="contained" color="primary">
+          End Watering
+        </Button>
+      </Grid>
+    </Grid>
+  </CardContent>
       )
     }
   }
