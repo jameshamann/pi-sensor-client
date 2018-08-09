@@ -41,9 +41,15 @@ class Watering extends Component {
      }
    }
 
-  componentDidMount(){
-    PubSub.publish('myTopic1', { msg: 'Hello to all subscribers!' });
+   startWatering(){
+      PubSub.publish('water_flow_status', { water_flow_status: 'on' });
+   }
 
+   stopWatering(){
+     PubSub.publish('water_flow_status', { water_flow_status: 'off' });
+   }
+
+  componentDidMount(){
 
     setInterval(() => {
       this.setFinishLoading()
@@ -68,12 +74,12 @@ class Watering extends Component {
                 </Typography>
             </Grid>
             <Grid item xs={1.2}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
                   Start Watering
                 </Button>
             </Grid>
           <Grid item xs={1.2}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
               End Watering
             </Button>
           </Grid>
@@ -92,12 +98,12 @@ class Watering extends Component {
       </Grid>
 
         <Grid item xs={1.2}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
               Start Watering
             </Button>
         </Grid>
       <Grid item xs={1.2}>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
           End Watering
         </Button>
       </Grid>
