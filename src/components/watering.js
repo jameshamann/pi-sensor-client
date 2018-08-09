@@ -41,6 +41,14 @@ class Watering extends Component {
      }
    }
 
+   startWatering(){
+      PubSub.publish('water_flow_status', { water_flow_status: 'on' });
+   }
+
+   stopWatering(){
+     PubSub.publish('water_flow_status', { water_flow_status: 'off' });
+   }
+
   componentDidMount(){
 
     setInterval(() => {
@@ -66,24 +74,41 @@ class Watering extends Component {
                 </Typography>
             </Grid>
             <Grid item xs={1.2}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
                   Start Watering
                 </Button>
             </Grid>
           <Grid item xs={1.2}>
-            <Button variant="contained" color="primary">
+            <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
               End Watering
             </Button>
           </Grid>
           </Grid>
-        </CardContent>
+      </CardContent>
       )
     } else {
       return (
+    <CardContent>
+      <Grid container spacing={24}>
+        <Grid item>
         <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, watering will not take place.
           If more is required, water flow can be controlled below.
           Monitor moisture and watering amount to ensure crops are not over watered.
         </Typography>
+      </Grid>
+
+        <Grid item xs={1.2}>
+            <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
+              Start Watering
+            </Button>
+        </Grid>
+      <Grid item xs={1.2}>
+        <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
+          End Watering
+        </Button>
+      </Grid>
+    </Grid>
+  </CardContent>
       )
     }
   }

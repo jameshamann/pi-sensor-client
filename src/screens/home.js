@@ -49,6 +49,7 @@ class Home extends Component {
       <AppBar
          title="Raspberry Pi Weather Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
+         style={{ backgroundColor: '#039be5' }}
       />
       <br />
       <br />
