@@ -1,28 +1,12 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'react'
-import RaisedButton from 'material-ui/RaisedButton';
 import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Amplify, { API, PubSub } from 'aws-amplify';
-import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
-import _ from 'lodash'
+import PubSub from 'aws-amplify';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import WeatherForecast from '../components/weatherForecast'
-import CloudyIcon from '@material-ui/icons/Cloud';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import Grid from '@material-ui/core/Grid';
-import GridList from '@material-ui/core/GridList';
 
 class Watering extends Component {
 
@@ -34,7 +18,7 @@ class Watering extends Component {
 
 
    setFinishLoading(){
-     if (this.props.currWeather == "") {
+     if (this.props.currWeather === "") {
        this.setState({load: ""})
      } else {
        this.setState({load: "finished"})
@@ -59,7 +43,7 @@ class Watering extends Component {
 
   setWateringStatus(precip){
     console.log(precip)
-    if (precip == 0) {
+    if (precip === 0) {
       return (
         <CardContent>
           <Grid container spacing={24}>
@@ -91,7 +75,7 @@ class Watering extends Component {
     <CardContent>
       <Grid container spacing={24}>
         <Grid item>
-        <Typography variant="subheading" style={{marginLeft: "25px"}}>{precip}mms Rainfall Expected Today, watering will not take place.
+        <Typography variant="subheading">{precip}mms Rainfall Expected Today, watering will not take place.
           If more is required, water flow can be controlled below.
           Monitor moisture and watering amount to ensure crops are not over watered.
         </Typography>
@@ -114,11 +98,8 @@ class Watering extends Component {
   }
 
   render() {
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    var today  = new Date();
     const LoadingProgress = (props) => {
-    const { loading, done, } = props;
+    const { done, } = props;
       if (done && this.props.currWeather != null) {
         return (
           <div style={{marginRight: "3  0px"}}>
@@ -129,7 +110,7 @@ class Watering extends Component {
       } else {
         return (
           <CardContent>
-            <CircularProgress size={50} style={{justifyContent: 'center', alignItems: 'center'}} size={50} />
+            <CircularProgress size={50} style={{justifyContent: 'center', alignItems: 'center'}} />
           </CardContent>
         );
       }
