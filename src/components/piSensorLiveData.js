@@ -11,9 +11,10 @@ class PiSensor extends Component {
 
   constructor(props){
     super(props);
+    this.getDaylightHours = this.getDaylightHours.bind(this)
     this.state = {
       temp: '', humidity: '', time_stamp: '', data: '',
-      iot: '', load: ''
+      iot: '', load: '', daylightHours: ''
     }
   }
 
@@ -63,6 +64,16 @@ get_time_int = function (uuid_str) {
      }
    }
 
+   getDaylightHours(){
+    var self = this;
+    fetch('https://api.sunrise-sunset.org/json?lat=' + this.props.latitude + '&lng=' + this.props.longitude)
+      .then(function(res){
+        return res.json()
+      }).then(function(res) {
+        self.setState({daylightHours: res.results})
+      });
+   }
+
   componentDidMount(){
     this.latestID()
     let apiName = 'PiSensorDataCRUD';
@@ -80,8 +91,7 @@ get_time_int = function (uuid_str) {
     });
     setInterval(() => {
       console.log("IM A TIMER IN PI")
-      console.log(this.props.longitude)
-      console.log(this.props.latitude)
+      this.getDaylightHours()
       this.setFinishLoading()
       let apiName = 'PiSensorDataCRUD';
       let path = '/PiSensorData/'+this.state.iot;
@@ -104,9 +114,9 @@ get_time_int = function (uuid_str) {
 
 
   render() {
+    console.log(this.state.daylightHours.day_length)
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var today  = new Date();
-    console.log(this.props.currWeather)
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
     const { done } = props;
@@ -129,6 +139,9 @@ get_time_int = function (uuid_str) {
             </Typography>
               <Typography component="p">
               Last Reading: {lastReading.toLocaleString().substring(12)}
+              </Typography>
+              <Typography component="p">
+              Hours of Daylight: {this.state.daylightHours.day_length}
               </Typography>
             </CardContent>
 
