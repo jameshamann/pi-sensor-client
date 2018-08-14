@@ -30,7 +30,7 @@ class WeatherForecast extends Component {
   .then(function(weather) {
     return weather.json()
   }).then(function(weather) {
-    self.props.getWeather(weather.current)
+    self.props.getWeather(weather.current, self.state.geolat, self.state.geolong)
     self.setFinishLoading()
     self.setState({
         oneDayWeatherIcon: weather.forecast.forecastday[0].day.condition.icon,

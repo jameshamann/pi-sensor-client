@@ -79,6 +79,9 @@ get_time_int = function (uuid_str) {
         console.log(error.response)
     });
     setInterval(() => {
+      console.log("IM A TIMER IN PI")
+      console.log(this.props.longitude)
+      console.log(this.props.latitude)
       this.setFinishLoading()
       let apiName = 'PiSensorDataCRUD';
       let path = '/PiSensorData/'+this.state.iot;

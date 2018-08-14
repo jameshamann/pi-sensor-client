@@ -11,13 +11,13 @@ class Home extends Component {
 
   constructor(props){
     super(props)
-    this.state = {currWeather: ''}
+    this.state = {currWeather: '', longitude: '', latitude: ''}
     this.nowWeather = this.nowWeather.bind(this);
 
   }
 
-  nowWeather = (currWeather) => {
-    this.setState({currWeather: currWeather})
+  nowWeather = (currWeather, longitude, latitude) => {
+    this.setState({currWeather: currWeather, longitude: longitude, latitude: latitude})
 
   }
 
@@ -41,7 +41,7 @@ class Home extends Component {
           <Grid item xs={1} sm={2}>
           </Grid>
           <Grid item xs={1} sm={3}>
-            <PiSensor currWeather={this.state.currWeather} showFiveDayForecast={this.showForecast}/>
+            <PiSensor currWeather={this.state.currWeather} showFiveDayForecast={this.showForecast} longitude={this.state.longitude} latitude={this.state.latitude}/>
           </Grid>
           <Grid item xs={1} sm={6}>
             <WeatherForecast getWeather={this.nowWeather} />
