@@ -138,10 +138,10 @@ get_time_int = function (uuid_str) {
               Predicted Rainfall: {this.props.currWeather.precip_mm} mm(s)
             </Typography>
               <Typography component="p">
-              Last Reading: {lastReading.toLocaleString().substring(12)}
+                Hours of Daylight: {this.state.daylightHours.day_length}
               </Typography>
               <Typography component="p">
-              Hours of Daylight: {this.state.daylightHours.day_length}
+              Last Reading: {lastReading.toLocaleString().substring(12)}
               </Typography>
             </CardContent>
 
