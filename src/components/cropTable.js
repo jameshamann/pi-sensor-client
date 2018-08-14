@@ -1,29 +1,16 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'react'
-import RaisedButton from 'material-ui/RaisedButton';
 import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Amplify, { API, PubSub } from 'aws-amplify';
-import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
-import _ from 'lodash'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import WeatherForecast from '../components/weatherForecast'
-import CloudyIcon from '@material-ui/icons/Cloud';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
 class CropTable extends Component {
@@ -39,7 +26,7 @@ class CropTable extends Component {
 
 
    setFinishLoading(){
-     if (this.props.currWeather == "") {
+     if (this.props.currWeather === "") {
        this.setState({load: ""})
      } else {
        this.setState({load: "finished"})
@@ -56,7 +43,7 @@ class CropTable extends Component {
 
   setWateringStatus(precip){
     console.log(precip)
-    if (precip == 0) {
+    if (precip === 0) {
       return (
           <Typography variant="subheading" style={{marginLeft: "25px"}}>
 
@@ -71,11 +58,8 @@ class CropTable extends Component {
 
 
   render() {
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    var today  = new Date();
     const LoadingProgress = (props) => {
-    const { loading, done, } = props;
+    const { done } = props;
       if (done) {
         return (
           <CardContent>
@@ -144,7 +128,7 @@ class CropTable extends Component {
       } else {
         return (
           <CardContent>
-            <CircularProgress size={50} style={{justifyContent: 'center', alignItems: 'center'}} size={50} />
+            <CircularProgress size={50} style={{justifyContent: 'center', alignItems: 'center'}} />
           </CardContent>
         );
       }

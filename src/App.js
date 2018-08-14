@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Home from './screens/home.js'
 import '../node_modules/react-vis/dist/style.css';
-import Amplify, { Auth } from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react';
-import Moment from 'react-moment';
+import Amplify from 'aws-amplify';
 import awsmobile from './aws-exports';
 Amplify.configure(awsmobile);
 

@@ -1,30 +1,11 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import AppBar from 'material-ui/AppBar';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
-
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Amplify, { API, PubSub } from 'aws-amplify';
-import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
-import _ from 'lodash'
-import {XYPlot, LineSeries, VerticalGridLines, HorizontalGridLines, XAxis, YAxis} from 'react-vis';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import moment from 'moment'
-import Grow from '@material-ui/core/Grow';
-const uuidv1 = require('uuid/v1');
 
 
 class WeatherForecast extends Component {
@@ -49,7 +30,7 @@ class WeatherForecast extends Component {
   .then(function(weather) {
     return weather.json()
   }).then(function(weather) {
-    self.props.getWeather(weather.current)
+    self.props.getWeather(weather.current, self.state.geolat, self.state.geolong)
     self.setFinishLoading()
     self.setState({
         oneDayWeatherIcon: weather.forecast.forecastday[0].day.condition.icon,
@@ -77,11 +58,10 @@ class WeatherForecast extends Component {
   }
 
    setFinishLoading(){
-     if (this.state.data == "") {
+     if (this.state.data === "") {
        this.setState({load: ""})
      } else {
        this.setState({load: "finished"})
-       var currentWeather = this.state.currWeather
      }
    }
 
@@ -95,37 +75,35 @@ class WeatherForecast extends Component {
 
   render() {
     console.log(this.state.currWeather)
-    const dayOne = this.state.oneDayWeather.day
     const LoadingProgress = (props) => {
-    const { loading, done, } = props;
-    const { checked } = this.state;
+    const {  done } = props;
       if (done) {
         return (
 
           <div>
             <Grid container spacing={24}>
                   <Grid item xs={1.5}>
-                    <img src={this.state.oneDayWeatherIcon} />
+                    <img alt="Weather Icon" src={this.state.oneDayWeatherIcon} />
                     <Typography variant="subheading">{moment().add(1, 'days').calendar().slice(0, -11) + " " + this.state.oneDayWeatherAveTemp}˚C</Typography>
                     <Typography variant="caption">{this.state.oneDayWeatherText}</Typography>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <img src={this.state.twoDayWeatherIcon} />
+                    <img alt="Weather Icon" src={this.state.twoDayWeatherIcon} />
                       <Typography variant="subheading">{moment().add(2, 'days').calendar().slice(0, -11) + " " + this.state.twoDayWeatherAveTemp}˚C</Typography>
                       <Typography variant="caption">{this.state.twoDayWeatherText}</Typography>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <img src={this.state.threeDayWeatherIcon} />
+                    <img alt="Weather Icon" src={this.state.threeDayWeatherIcon} />
                       <Typography variant="subheading">{moment().add(3, 'days').calendar().slice(0, -11) + " " + this.state.threeDayWeatherAveTemp}˚C</Typography>
                       <Typography variant="caption">{this.state.threeDayWeatherText}</Typography>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <img src={this.state.fourDayWeatherIcon} />
+                    <img alt="Weather Icon" src={this.state.fourDayWeatherIcon} />
                       <Typography variant="subheading">{moment().add(4, 'days').calendar().slice(0, -11) + " " + this.state.fourDayWeatherAveTemp}˚C</Typography>
                       <Typography variant="caption">{this.state.fourDayWeatherText}</Typography>
                   </Grid>
                   <Grid item xs={1.5}>
-                    <img src={this.state.fiveDayWeatherIcon} />
+                    <img alt="Weather Icon" src={this.state.fiveDayWeatherIcon} />
                       <Typography variant="subheading">{moment().add(5, 'days').calendar().slice(0, -11) + " " + this.state.fiveDayWeatherAveTemp}˚C</Typography>
                       <Typography variant="caption">{this.state.fiveDayWeatherText}</Typography>
                   </Grid>

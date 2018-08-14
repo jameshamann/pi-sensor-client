@@ -1,35 +1,26 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'react'
-import RaisedButton from 'material-ui/RaisedButton';
 import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Amplify, { API, PubSub } from 'aws-amplify';
 import { AWSIoTProvider } from '@aws-amplify/pubsub/lib/Providers';
-import _ from 'lodash'
 import CircularProgress from '@material-ui/core/CircularProgress';
-import WeatherForecast from '../components/weatherForecast'
-import BuildIcon from '@material-ui/icons/Build';
 
 class PiSensor extends Component {
 
   constructor(props){
     super(props);
+    this.getDaylightHours = this.getDaylightHours.bind(this)
     this.state = {
       temp: '', humidity: '', time_stamp: '', data: '',
-      iot: '', load: ''
+      iot: '', load: '', daylightHours: ''
     }
   }
 
 get_time_int = function (uuid_str) {
 
-  if (uuid_str == "") {
+  if (uuid_str === "") {
     return "Awaiting Data"
   } else {
        var uuid_arr = uuid_str.split( '-' ),
@@ -43,7 +34,7 @@ get_time_int = function (uuid_str) {
    };
 
    get_date_obj = function (uuid_str) {
-     if (uuid_str == "") {
+     if (uuid_str === "") {
        return "Awaiting Data"
      } else {
        var int_time = this.get_time_int( uuid_str ) - 122192928000000000,
@@ -66,11 +57,21 @@ get_time_int = function (uuid_str) {
    }
 
    setFinishLoading(){
-     if (this.state.data == "") {
+     if (this.state.data === "") {
        this.setState({load: ""})
      } else {
        this.setState({load: "finished"})
      }
+   }
+
+   getDaylightHours(){
+    var self = this;
+    fetch('https://api.sunrise-sunset.org/json?lat=' + this.props.latitude + '&lng=' + this.props.longitude)
+      .then(function(res){
+        return res.json()
+      }).then(function(res) {
+        self.setState({daylightHours: res.results})
+      });
    }
 
   componentDidMount(){
@@ -89,6 +90,8 @@ get_time_int = function (uuid_str) {
         console.log(error.response)
     });
     setInterval(() => {
+      console.log("IM A TIMER IN PI")
+      this.getDaylightHours()
       this.setFinishLoading()
       let apiName = 'PiSensorDataCRUD';
       let path = '/PiSensorData/'+this.state.iot;
@@ -111,20 +114,18 @@ get_time_int = function (uuid_str) {
 
 
   render() {
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-    const data = this.state.data;
+    console.log(this.state.daylightHours.day_length)
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     var today  = new Date();
-    console.log(this.props.currWeather)
     const lastReading = this.get_date_obj(this.state.iot)
     const LoadingProgress = (props) => {
-    const { loading, done, } = props;
+    const { done } = props;
       if (done) {
         return (
           <CardContent>
 
             <div>
-              <img width="64" height="64" src={this.props.currWeather.condition.icon}></img>
+              <img alt="Weather Icon" width="64" height="64" src={this.props.currWeather.condition.icon}></img>
             </div>
             <Typography component="p">{this.props.currWeather.condition.text}, Feels Like: {this.props.currWeather.feelslike_c}˚C</Typography>
             <Typography component="p">
@@ -137,6 +138,9 @@ get_time_int = function (uuid_str) {
               Predicted Rainfall: {this.props.currWeather.precip_mm} mm(s)
             </Typography>
               <Typography component="p">
+                Hours of Daylight: {this.state.daylightHours.day_length}
+              </Typography>
+              <Typography component="p">
               Last Reading: {lastReading.toLocaleString().substring(12)}
               </Typography>
             </CardContent>
@@ -145,12 +149,11 @@ get_time_int = function (uuid_str) {
       } else {
         return (
           <CardContent>
-            <CircularProgress size={50} style={{justifyContent: 'center', alignItems: 'center'}} size={50} />
+            <CircularProgress size={50} style={{justifyContent: 'center', alignItems: 'center'}} />
           </CardContent>
         );
       }
     }
-    const { checked } = this.state;
     return (
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
