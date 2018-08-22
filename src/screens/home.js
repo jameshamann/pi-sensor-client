@@ -6,6 +6,9 @@ import WeatherForecast from '../components/weatherForecast'
 import PiSensor from '../components/piSensorLiveData'
 import Watering from '../components/watering'
 import CropTable from '../components/cropTable'
+import { Auth } from 'aws-amplify';
+
+
 
 class Home extends Component {
 
@@ -22,6 +25,9 @@ class Home extends Component {
   }
 
   componentDidMount(){
+    setInterval(() => {
+      console.log(this.props.authData)
+    }, 5000);
     this.nowWeather()
   }
 
