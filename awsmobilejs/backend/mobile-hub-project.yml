@@ -9,31 +9,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /PiSensorData: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/PiSensorData-20180730220411.zip
+            codeFilename: uploads/PiSensorData-20180821162900.zip
             description: 'Handler for calls to resource path : /PiSensorData/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: Pa16DaCZTG2xuO643444BDiCSHfyAsLa3UsvBUiRsGY=
+            hashcode: REBF33QJAzzUf/ZgR60Dcg1sVnLo7AC5z8Z/ITLrQGw=
             memorySize: '128'
-            modified: '2018-07-30T21:07:05.825+0000'
+            modified: '2018-08-21T15:32:17.411+0000'
             name: PiSensorData
             runtime: nodejs6.10
             timeout: '3'
-            version: KlWWuZkwNwDmP4mUrvw0e8Q9YzaxSYcQ
+            version: RfX.Rkcy_81YhWowt6px__1C7h80mo7A
           '/PiSensorData/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/PiSensorData-20180730220411.zip
+            codeFilename: uploads/PiSensorData-20180821162900.zip
             description: 'Handler for calls to resource path : /PiSensorData/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: Pa16DaCZTG2xuO643444BDiCSHfyAsLa3UsvBUiRsGY=
+            hashcode: REBF33QJAzzUf/ZgR60Dcg1sVnLo7AC5z8Z/ITLrQGw=
             memorySize: '128'
-            modified: '2018-07-30T21:07:05.825+0000'
+            modified: '2018-08-21T15:32:17.411+0000'
             name: PiSensorData
             runtime: nodejs6.10
             timeout: '3'
-            version: Ub12kfWb73JGUYKgQfIbbO4mQstWI8kg
+            version: l7DvArPrcm9yOht1j.5Ru1ihRtWwZS3r
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -62,6 +62,12 @@ features:
       enabled: true
       optional-sign-in: true
     components:
+      sign-in-google: !com.amazonaws.mobilehub.v0.OpenIDConnectIdentityProvider 
+        attributes:
+          open-id-connect-audience-android: 971008465059-ngv19hau4la5jesguoub021k27sm3lq6.apps.googleusercontent.com
+          open-id-connect-audience-ios: 971008465059-ngv19hau4la5jesguoub021k27sm3lq6.apps.googleusercontent.com
+          open-id-connect-audience-webapp: 971008465059-ngv19hau4la5jesguoub021k27sm3lq6.apps.googleusercontent.com
+          open-id-provider-url: 'https://accounts.google.com'
       sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider 
         attributes:
           alias-attributes:

@@ -19,6 +19,8 @@ const awsmobile = {
     'aws_dynamodb': 'enable',
     'aws_dynamodb_all_tables_region': 'eu-west-2',
     'aws_dynamodb_table_schemas': [{"tableName":"pisensorclient-mobilehub-1516835929-PiSensorData","attributes":[{"name":"ID","type":"S"},{"name":"TimeStamp","type":"N"}],"indexes":[],"region":"eu-west-2","hashKey":"ID","rangeKey":"TimeStamp"}],
+    'aws_google_app_permissions': 'email,profile,openid',
+    'aws_google_web_app_id': '971008465059-ngv19hau4la5jesguoub021k27sm3lq6.apps.googleusercontent.com',
     'aws_mobile_analytics_app_id': '43a4ea3dc8d644e9822a9549f89daf5f',
     'aws_mobile_analytics_app_region': 'us-east-1',
     'aws_project_id': '5e0eb26b-90d4-4a76-b785-63c46957d5d3',
