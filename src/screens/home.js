@@ -13,19 +13,15 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { Auth } from 'aws-amplify';
 
 
 class Home extends Component {
 
   constructor(props){
     super(props)
-    this.state = {currWeather: '', longitude: '', latitude: ''}
+    this.state = {currWeather: '', longitude: '', latitude: '',  anchorEl: null}
     this.nowWeather = this.nowWeather.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleMenu = this.handleMenu.bind(this);
-
-
   }
 
   nowWeather = (currWeather, longitude, latitude) => {
@@ -37,21 +33,24 @@ class Home extends Component {
     this.nowWeather()
   }
 
-  handleChange = (event, checked) => {
-    this.setState({ auth: checked });
+
+  handleClick = event => {
+   this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
+  signOut = () => {
     this.setState({ anchorEl: null });
+    Auth.signOut()
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+   };
+
+ handleClose = () => {
+   this.setState({ anchorEl: null });
   };
 
   render() {
-    const open = Boolean(anchorEl);
-    const { auth, anchorEl } = this.state;
+    const { anchorEl } = this.state;
     console.log(this.state.currWeather)
     return (
     <MuiThemeProvider>
@@ -63,25 +62,20 @@ class Home extends Component {
       >
       <Toolbar>
 
-        <Button style={{color: 'white', textTransform: 'none', fontSize: 11 }} onClick={this.handleMenu}>
+        <Button style={{color: 'white', textTransform: 'none', fontSize: 11 }} onClick={this.handleClick}>
           <Icon style={{paddingRight: 2, color: 'white'}}>
             <UserIcon />
           </Icon>
           {this.props.userData.name}
         </Button>
         <Menu
-         id="menu-appbar"
-         anchorEl={anchorEl}
-         anchorOrigin={{
-           vertical: 'top',
-           horizontal: 'right',
-         }}
-         open={open}
-         onClose={this.handleClose}
-       >
-         <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-         <MenuItem onClick={this.handleClose}>My account</MenuItem>
-       </Menu>
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}
+        >
+        <MenuItem onClick={this.signOut}>Logout</MenuItem>
+      </Menu>
         </Toolbar>
     </AppBar>
       <br />
