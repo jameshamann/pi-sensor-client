@@ -6,9 +6,11 @@ import WeatherForecast from '../components/weatherForecast'
 import PiSensor from '../components/piSensorLiveData'
 import Watering from '../components/watering'
 import CropTable from '../components/cropTable'
-import { Auth } from 'aws-amplify';
-
-
+import UserIcon from '@material-ui/icons/Person';
+import Icon from '@material-ui/core/Icon';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 class Home extends Component {
 
@@ -25,9 +27,6 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    setInterval(() => {
-      console.log(this.props.authData)
-    }, 5000);
     this.nowWeather()
   }
 
@@ -39,7 +38,18 @@ class Home extends Component {
          title="Raspberry Pi Weather Dashboard"
          iconClassNameRight="muidocs-icon-navigation-expand-more"
          style={{ backgroundColor: '#039be5' }}
-      />
+         position="static"
+      >
+      <Toolbar>
+
+        <Button style={{color: 'white', textTransform: 'none', fontSize: 11 }} >
+          <Icon style={{paddingRight: 2, color: 'white'}}>
+            <UserIcon />
+          </Icon>
+          {this.props.userData.name}
+        </Button>
+        </Toolbar>
+    </AppBar>
       <br />
       <br />
       <div>

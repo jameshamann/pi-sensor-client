@@ -27,7 +27,6 @@
   to { transform: rotate(360deg); }
 }
 
-.amplify-nav-right {
-  display: none;
-  padding: none;
+.amplify-nav-bar {
+  display:none;
 }

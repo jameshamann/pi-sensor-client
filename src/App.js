@@ -9,7 +9,7 @@ Amplify.configure(awsmobile);
 class App extends Component {
   render() {
     return (
-      <Home />
+      <Home userData={this.props.authData} />
     );
   }
 }
