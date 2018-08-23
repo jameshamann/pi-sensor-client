@@ -10,7 +10,6 @@ import UserIcon from '@material-ui/icons/Person';
 import Icon from '@material-ui/core/Icon';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { Auth } from 'aws-amplify';
@@ -22,6 +21,8 @@ class Home extends Component {
     super(props)
     this.state = {currWeather: '', longitude: '', latitude: '',  anchorEl: null}
     this.nowWeather = this.nowWeather.bind(this);
+    this.logOut = this.logOut.bind(this);
+
   }
 
   nowWeather = (currWeather, longitude, latitude) => {
@@ -38,11 +39,12 @@ class Home extends Component {
    this.setState({ anchorEl: event.currentTarget });
   };
 
-  signOut = () => {
-    this.setState({ anchorEl: null });
+  logOut(event){
+    this.setState({ anchorEl: null,});
     Auth.signOut()
     .then(data => console.log(data))
     .catch(err => console.log(err));
+     window.location.reload()
    };
 
  handleClose = () => {
@@ -74,7 +76,7 @@ class Home extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-        <MenuItem onClick={this.signOut}>Logout</MenuItem>
+        <MenuItem onClick={this.logOut}>Logout</MenuItem>
       </Menu>
         </Toolbar>
     </AppBar>
