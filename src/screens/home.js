@@ -11,6 +11,9 @@ import Icon from '@material-ui/core/Icon';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+
 
 class Home extends Component {
 
@@ -18,6 +21,10 @@ class Home extends Component {
     super(props)
     this.state = {currWeather: '', longitude: '', latitude: ''}
     this.nowWeather = this.nowWeather.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleMenu = this.handleMenu.bind(this);
+
 
   }
 
@@ -30,7 +37,21 @@ class Home extends Component {
     this.nowWeather()
   }
 
+  handleChange = (event, checked) => {
+    this.setState({ auth: checked });
+  };
+
+  handleMenu = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
   render() {
+    const open = Boolean(anchorEl);
+    const { auth, anchorEl } = this.state;
     console.log(this.state.currWeather)
     return (
     <MuiThemeProvider>
@@ -42,12 +63,25 @@ class Home extends Component {
       >
       <Toolbar>
 
-        <Button style={{color: 'white', textTransform: 'none', fontSize: 11 }} >
+        <Button style={{color: 'white', textTransform: 'none', fontSize: 11 }} onClick={this.handleMenu}>
           <Icon style={{paddingRight: 2, color: 'white'}}>
             <UserIcon />
           </Icon>
           {this.props.userData.name}
         </Button>
+        <Menu
+         id="menu-appbar"
+         anchorEl={anchorEl}
+         anchorOrigin={{
+           vertical: 'top',
+           horizontal: 'right',
+         }}
+         open={open}
+         onClose={this.handleClose}
+       >
+         <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+         <MenuItem onClick={this.handleClose}>My account</MenuItem>
+       </Menu>
         </Toolbar>
     </AppBar>
       <br />
