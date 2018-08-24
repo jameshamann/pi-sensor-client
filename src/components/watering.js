@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import PubSub from 'aws-amplify';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Timer from './timer'
 
 class Watering extends Component {
 
@@ -67,6 +68,9 @@ class Watering extends Component {
               End Watering
             </Button>
           </Grid>
+            <Grid item xs={1.2}>
+              <Timer />
+            </Grid>
           </Grid>
       </CardContent>
       )
