@@ -56,10 +56,12 @@ class Watering extends Component {
    }
 
    startWatering(){
+      this.startTimer()
       PubSub.publish('water_flow_status', { water_flow_status: 'on' });
    }
 
    stopWatering(){
+     this.stopTimer()
      PubSub.publish('water_flow_status', { water_flow_status: 'off' });
    }
 
@@ -72,18 +74,7 @@ class Watering extends Component {
   }
 
   setWateringStatus(precip){
-    let start = (this.state.time == 0) ?
-      <button onClick={this.startTimer}>start</button> :
-      null
-    let stop = (this.state.time == 0 || !this.state.isOn) ?
-      null :
-      <button onClick={this.stopTimer}>stop</button>
-    let resume = (this.state.time == 0 || this.state.isOn) ?
-      null :
-      <button onClick={this.startTimer}>resume</button>
-    let reset = (this.state.time == 0 || this.state.isOn) ?
-      null :
-      <button onClick={this.resetTimer}>reset</button>
+
     console.log(precip)
     if (precip === 0) {
       return (
@@ -105,17 +96,14 @@ class Watering extends Component {
                 </Button>
             </Grid>
           <Grid item xs={1.2}>
-            <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
+            <Button variant="contained" color="primary" onClick={() => { this.stopWatering()}}>
               End Watering
             </Button>
           </Grid>
             <Grid item xs={1.2}>
               <div>
                 <h3>timer: {ms(this.state.time)}</h3>
-                {start}
-                {resume}
-                {stop}
-                {reset}
+
               </div>
             </Grid>
           </Grid>
