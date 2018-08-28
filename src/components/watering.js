@@ -8,6 +8,7 @@ import PubSub from 'aws-amplify';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import ms from "pretty-ms"
+import Paper from '@material-ui/core/Paper';
 
 
 class Watering extends Component {
@@ -100,11 +101,10 @@ class Watering extends Component {
               End Watering
             </Button>
           </Grid>
-            <Grid item xs={1.2}>
-              <div>
-                <h3>timer: {ms(this.state.time)}</h3>
-
-              </div>
+            <Grid item>
+              <Paper>
+                <Typography variant="subheading">Timer: {ms(this.state.time)}</Typography>
+              </Paper>
             </Grid>
           </Grid>
       </CardContent>
