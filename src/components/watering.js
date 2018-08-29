@@ -15,32 +15,26 @@ class Watering extends Component {
 
   constructor(props){
     super(props);
-    this.setWateringStatus = this.setWateringStatus.bind(this)
     this.state = {
         time: 0,
-        isOn: false,
-        start: 0,
         load: ''
       }
     this.startWatering = this.startWatering.bind(this)
     this.stopWatering = this.stopWatering.bind(this)
-    this.resetTimer = this.resetTimer.bind(this)
+    this.startTimer = this.startTimer.bind(this)
+    this.stopTimer = this.stopTimer.bind(this)
+
   }
 
   startTimer() {
-    this.setState({
-      isOn: true,
-      time: this.state.time,
-      start: Date.now() - this.state.time
-    })
-  
-  }
+    const start = Date.now() - this.state.time;
+    this.timer = setInterval(() => {
+        this.setState({time: Date.now() - start});
+      });
+    }
 
   stopTimer() {
-    this.setState({
-      isOn: false,
-      time: Date.now() - this.state.start
-    })
+    clearInterval(this.timer)
   }
 
   resetTimer() {
@@ -62,11 +56,12 @@ class Watering extends Component {
    }
 
    stopWatering(){
-     this.stopTimer()
+     clearInterval(this.timer)
      // PubSub.publish('water_flow_status', { water_flow_status: 'off' });
    }
 
   componentDidMount(){
+    clearInterval(this.timer)
     setInterval(() => {
         this.setFinishLoading()
       // this.stopTimer()
@@ -77,7 +72,6 @@ class Watering extends Component {
   setWateringStatus(precip){
     if (precip === 0) {
       return (
-          <Grid container spacing={24}>
             <Grid item>
                 <Typography variant="headline">
                     No Rainfall predicted for today, watering is required.
@@ -88,57 +82,32 @@ class Watering extends Component {
                     Monitor moisture and watering amount to ensure crops are not over watered.
                 </Typography>
             </Grid>
-            <Grid item xs={1.2}>
-                <Button variant="contained" color="primary" onClick={this.startWatering}>
-                  Start Watering
-                </Button>
-            </Grid>
-          <Grid item xs={1.2}>
-            <Button variant="contained"  color="primary" onClick={this.stopWatering}>
-              End Watering
-            </Button>
-          </Grid>
-            <Grid item>
-                <Typography variant="subheading">Timer: {ms(this.state.time)}</Typography>
-            </Grid>
-          </Grid>
+
       )
     } else {
       return (
-      <Grid container spacing={24}>
+
         <Grid item>
         <Typography variant="subheading">{precip}mms Rainfall Expected Today, watering will not take place.
           If more is required, water flow can be controlled below.
           Monitor moisture and watering amount to ensure crops are not over watered.
         </Typography>
       </Grid>
-
-        <Grid item xs={1.2}>
-            <Button variant="contained" color="primary" onClick={this.startWatering}>
-              Start Watering
-            </Button>
-        </Grid>
-      <Grid item xs={1.2}>
-        <Button variant="contained" color="primary" onClick={this.stopWatering}>
-          End Watering
-        </Button>
-      </Grid>
-      <Grid item>
-          <Typography variant="subheading">Timer: {ms(this.state.time)}</Typography>
-      </Grid>
-    </Grid>
       )
     }
   }
 
   render() {
+    const {time, start} = this.state;
     const LoadingProgress = (props) => {
     const { done, } = props;
+    const self = this;
       if (done && this.props.currWeather != null) {
         return (
-          <CardContent>
-            {this.setWateringStatus(this.props.currWeather.precip_mm)}
-          </CardContent>
+            <div>
+              {this.setWateringStatus(this.props.currWeather.precip_mm)}
+            </div>
+
 
           );
       } else {
@@ -155,10 +124,28 @@ class Watering extends Component {
               title="Watering Status"
               subheader="Current Status: Live, Last Reading: 12:00"
               />
+              <CardContent>
+                <Grid container spacing={24}>
               <LoadingProgress
                 loading={this.state.load}
                 done={this.state.load}
                 />
+                <Grid item xs={1.2}>
+                    <Button variant="contained" color="primary" onClick={this.startWatering.bind(this)}>
+                      Start Watering
+                    </Button>
+                </Grid>
+                <Grid item xs={1.2}>
+                  <Button variant="contained"  color="primary" onClick={this.stopWatering.bind(this)}>
+                    End Watering
+                  </Button>
+                </Grid>
+                  <Grid item>
+                      <Typography variant="subheading">Timer: {ms(time)}</Typography>
+                  </Grid>
+                </Grid>
+             </CardContent>
+
           </Card>
         );
   }
