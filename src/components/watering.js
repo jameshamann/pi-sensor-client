@@ -17,7 +17,8 @@ class Watering extends Component {
     super(props);
     this.state = {
         time: 0,
-        load: ''
+        load: '',
+        buttonDisplay: 'none'
       }
     this.startWatering = this.startWatering.bind(this)
     this.stopWatering = this.stopWatering.bind(this)
@@ -48,6 +49,9 @@ class Watering extends Component {
      } else {
        this.setState({load: "finished"})
      }
+     if (this.state.load === "finished"){
+       this.setState({buttonDisplay: ""})
+     }
    }
 
    startWatering(){
@@ -72,7 +76,7 @@ class Watering extends Component {
   setWateringStatus(precip){
     if (precip === 0) {
       return (
-            <Grid item>
+            <Grid item xs={1.2} style={{marginLeft: '15px'}}>
                 <Typography variant="headline">
                     No Rainfall predicted for today, watering is required.
                 </Typography>
@@ -87,7 +91,7 @@ class Watering extends Component {
     } else {
       return (
 
-        <Grid item>
+        <Grid item xs={1.2} style={{marginLeft: '10px'}}>
         <Typography variant="subheading">{precip}mms Rainfall Expected Today, watering will not take place.
           If more is required, water flow can be controlled below.
           Monitor moisture and watering amount to ensure crops are not over watered.
@@ -130,17 +134,17 @@ class Watering extends Component {
                 loading={this.state.load}
                 done={this.state.load}
                 />
-                <Grid item xs={1.2}>
+              <Grid item xs={1.2} style={{display: this.state.buttonDisplay}}>
                     <Button variant="contained" color="primary" onClick={this.startWatering.bind(this)}>
                       Start Watering
                     </Button>
                 </Grid>
-                <Grid item xs={1.2}>
+                <Grid item xs={1.2} style={{display: this.state.buttonDisplay}}>
                   <Button variant="contained"  color="primary" onClick={this.stopWatering.bind(this)}>
                     End Watering
                   </Button>
                 </Grid>
-                  <Grid item>
+                  <Grid item style={{display: this.state.buttonDisplay}}>
                       <Typography variant="subheading">Timer: {ms(time)}</Typography>
                   </Grid>
                 </Grid>
