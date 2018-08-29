@@ -22,9 +22,9 @@ class Watering extends Component {
         start: 0,
         load: ''
       }
-      this.startTimer = this.startTimer.bind(this)
-      this.stopTimer = this.stopTimer.bind(this)
-      this.resetTimer = this.resetTimer.bind(this)
+    this.startWatering = this.startWatering.bind(this)
+    this.stopWatering = this.stopWatering.bind(this)
+    this.resetTimer = this.resetTimer.bind(this)
   }
 
   startTimer() {
@@ -33,14 +33,14 @@ class Watering extends Component {
       time: this.state.time,
       start: Date.now() - this.state.time
     })
-    this.timer = setInterval(() => this.setState({
-      time: Date.now() - this.state.start
-    }), 1);
+  
   }
 
   stopTimer() {
-    this.setState({isOn: false})
-    clearInterval(this.timer)
+    this.setState({
+      isOn: false,
+      time: Date.now() - this.state.start
+    })
   }
 
   resetTimer() {
@@ -58,28 +58,25 @@ class Watering extends Component {
 
    startWatering(){
       this.startTimer()
-      PubSub.publish('water_flow_status', { water_flow_status: 'on' });
+      // PubSub.publish('water_flow_status', { water_flow_status: 'on' });
    }
 
    stopWatering(){
      this.stopTimer()
-     PubSub.publish('water_flow_status', { water_flow_status: 'off' });
+     // PubSub.publish('water_flow_status', { water_flow_status: 'off' });
    }
 
   componentDidMount(){
-
     setInterval(() => {
-      this.setFinishLoading()
+        this.setFinishLoading()
+      // this.stopTimer()
       // this.setWateringStatus(this.props.currWeather.precip_mm)
     }, 5000);
   }
 
   setWateringStatus(precip){
-
-    console.log(precip)
     if (precip === 0) {
       return (
-        <CardContent>
           <Grid container spacing={24}>
             <Grid item>
                 <Typography variant="headline">
@@ -92,26 +89,22 @@ class Watering extends Component {
                 </Typography>
             </Grid>
             <Grid item xs={1.2}>
-                <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
+                <Button variant="contained" color="primary" onClick={this.startWatering}>
                   Start Watering
                 </Button>
             </Grid>
           <Grid item xs={1.2}>
-            <Button variant="contained" color="primary" onClick={() => { this.stopWatering()}}>
+            <Button variant="contained"  color="primary" onClick={this.stopWatering}>
               End Watering
             </Button>
           </Grid>
             <Grid item>
-              <Paper>
                 <Typography variant="subheading">Timer: {ms(this.state.time)}</Typography>
-              </Paper>
             </Grid>
           </Grid>
-      </CardContent>
       )
     } else {
       return (
-    <CardContent>
       <Grid container spacing={24}>
         <Grid item>
         <Typography variant="subheading">{precip}mms Rainfall Expected Today, watering will not take place.
@@ -121,17 +114,19 @@ class Watering extends Component {
       </Grid>
 
         <Grid item xs={1.2}>
-            <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
+            <Button variant="contained" color="primary" onClick={this.startWatering}>
               Start Watering
             </Button>
         </Grid>
       <Grid item xs={1.2}>
-        <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
+        <Button variant="contained" color="primary" onClick={this.stopWatering}>
           End Watering
         </Button>
       </Grid>
+      <Grid item>
+          <Typography variant="subheading">Timer: {ms(this.state.time)}</Typography>
+      </Grid>
     </Grid>
-  </CardContent>
       )
     }
   }
@@ -141,9 +136,9 @@ class Watering extends Component {
     const { done, } = props;
       if (done && this.props.currWeather != null) {
         return (
-          <div style={{marginRight: "3  0px"}}>
+          <CardContent>
             {this.setWateringStatus(this.props.currWeather.precip_mm)}
-          </div>
+          </CardContent>
 
           );
       } else {
