@@ -9,6 +9,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import ms from "pretty-ms"
 import Paper from '@material-ui/core/Paper';
+import Switch from '@material-ui/core/Switch';
+import TimerIcon from '@material-ui/icons/Opacity'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 class Watering extends Component {
@@ -20,12 +23,15 @@ class Watering extends Component {
         load: '',
         buttonDisplay: 'none',
         prevWateringDate: '',
-        prevWateringTime: 0
+        prevWateringTime: 0,
+        timerOn: false,
+        timeDisplay: 'none'
       }
     this.startWatering = this.startWatering.bind(this)
     this.stopWatering = this.stopWatering.bind(this)
     this.startTimer = this.startTimer.bind(this)
     this.stopTimer = this.stopTimer.bind(this)
+    this.handleToggle = this.handleToggle.bind(this);
 
   }
 
@@ -59,6 +65,8 @@ class Watering extends Component {
      }
    }
 
+
+
    startWatering(){
       this.startTimer()
       // PubSub.publish('water_flow_status', { water_flow_status: 'on' });
@@ -78,6 +86,18 @@ class Watering extends Component {
     }, 5000);
   }
 
+  handleToggle(e){
+    this.setState({timerOn: !this.state.timerOn})
+    console.log(this.state.timerOn)
+    if (this.state.timerOn === false) {
+      this.startWatering()
+      this.setState({timeDisplay: ''})
+    } else {
+      this.stopWatering()
+      this.setState({timeDisplay: 'none'})
+    }
+  }
+
   setWateringStatus(precip){
     if (precip === 0) {
       return (
@@ -86,7 +106,7 @@ class Watering extends Component {
                     No Rainfall predicted for today, watering is required.
                 </Typography>
                 <br />
-                <Typography variant='subheading'>
+                <Typography variant='body2'>
                     Watering will be automated, if more is required water flow can be controlled below using the relevant buttons.
                     Monitor moisture and watering amount to ensure crops are not over watered.
                 </Typography>
@@ -97,7 +117,7 @@ class Watering extends Component {
       return (
 
         <Grid item xs={1.2} style={{marginLeft: '10px'}}>
-        <Typography variant="subheading">{precip}mms Rainfall Expected Today, watering will not take place.
+        <Typography variant="body2">{precip}mms Rainfall Expected Today, watering will not take place.
           If more is required, water flow can be controlled below.
           Monitor moisture and watering amount to ensure crops are not over watered.
         </Typography>
@@ -140,20 +160,16 @@ class Watering extends Component {
                 loading={this.state.load}
                 done={this.state.load}
                 />
-              <Grid item xs={1.2} style={{display: this.state.buttonDisplay}}>
-                    <Button variant="contained" color="primary" onClick={this.startWatering.bind(this)}>
-                      Start Watering
-                    </Button>
+              <Grid item style={{display: this.state.buttonDisplay}}>
+                  <TimerIcon style={{verticalAlign: 'middle', fontSize: '25px'}} />
+                  <Switch
+                    onClick={this.handleToggle}
+                  />
+                <Typography style={{display: this.state.timeDisplay}} variant="subheading">
+                  Time Watered: {ms(time)}
+                </Typography>
                 </Grid>
-                <Grid item xs={1.2} style={{display: this.state.buttonDisplay}}>
-                  <Button variant="contained"  color="primary" onClick={this.stopWatering.bind(this)}>
-                    End Watering
-                  </Button>
-                </Grid>
-                  <Grid item style={{display: this.state.buttonDisplay}}>
-                      <Typography variant="subheading">Timer: {ms(time)}</Typography>
-                  </Grid>
-                </Grid>
+              </Grid>
              </CardContent>
 
           </Card>
