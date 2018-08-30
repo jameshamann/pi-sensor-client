@@ -18,7 +18,9 @@ class Watering extends Component {
     this.state = {
         time: 0,
         load: '',
-        buttonDisplay: 'none'
+        buttonDisplay: 'none',
+        prevWateringDate: '',
+        prevWateringTime: 0
       }
     this.startWatering = this.startWatering.bind(this)
     this.stopWatering = this.stopWatering.bind(this)
@@ -35,6 +37,9 @@ class Watering extends Component {
     }
 
   stopTimer() {
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
+    var today = new Date()
+    this.setState({prevWateringDate: today.toLocaleDateString("en-US", options), prevWateringTime: this.state.time, time: 0})
     clearInterval(this.timer)
   }
 
@@ -60,7 +65,7 @@ class Watering extends Component {
    }
 
    stopWatering(){
-     clearInterval(this.timer)
+     this.stopTimer()
      // PubSub.publish('water_flow_status', { water_flow_status: 'off' });
    }
 
@@ -102,7 +107,8 @@ class Watering extends Component {
   }
 
   render() {
-    const {time, start} = this.state;
+    const {time, start, prevWateringDate, prevWateringTime} = this.state;
+    const wateringTime = "Previously watered on " + prevWateringDate + " for " + ms(prevWateringTime)
     const LoadingProgress = (props) => {
     const { done, } = props;
     const self = this;
@@ -126,7 +132,7 @@ class Watering extends Component {
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
               title="Watering Status"
-              subheader="Current Status: Live, Last Reading: 12:00"
+              subheader={wateringTime}
               />
               <CardContent>
                 <Grid container spacing={24}>
