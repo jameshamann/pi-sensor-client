@@ -7,13 +7,50 @@ import Typography from '@material-ui/core/Typography';
 import PubSub from 'aws-amplify';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import ms from "pretty-ms"
+import Paper from '@material-ui/core/Paper';
+import Switch from '@material-ui/core/Switch';
+import TimerIcon from '@material-ui/icons/Opacity'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 class Watering extends Component {
 
   constructor(props){
     super(props);
-    this.state = {load: ''}
-    this.setWateringStatus = this.setWateringStatus.bind(this)
+    this.state = {
+        time: 0,
+        load: '',
+        buttonDisplay: 'none',
+        prevWateringDate: '',
+        prevWateringTime: 0,
+        timerOn: false,
+        timeDisplay: 'none'
+      }
+    this.startWatering = this.startWatering.bind(this)
+    this.stopWatering = this.stopWatering.bind(this)
+    this.startTimer = this.startTimer.bind(this)
+    this.stopTimer = this.stopTimer.bind(this)
+    this.handleToggle = this.handleToggle.bind(this);
+
+  }
+
+  startTimer() {
+    const start = Date.now() - this.state.time;
+    this.timer = setInterval(() => {
+        this.setState({time: Date.now() - start});
+      });
+    }
+
+  stopTimer() {
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: "numeric", minute: "numeric" };
+    var today = new Date()
+    this.setState({prevWateringDate: today.toLocaleDateString("en-US", options), prevWateringTime: this.state.time, time: 0})
+    clearInterval(this.timer)
+  }
+
+  resetTimer() {
+    this.setState({time: 0, isOn: false})
   }
 
 
@@ -23,88 +60,84 @@ class Watering extends Component {
      } else {
        this.setState({load: "finished"})
      }
+     if (this.state.load === "finished"){
+       this.setState({buttonDisplay: ""})
+     }
    }
 
+
+
    startWatering(){
-      PubSub.publish('water_flow_status', { water_flow_status: 'on' });
+      this.startTimer()
+      // PubSub.publish('water_flow_status', { water_flow_status: 'on' });
    }
 
    stopWatering(){
-     PubSub.publish('water_flow_status', { water_flow_status: 'off' });
+     this.stopTimer()
+     // PubSub.publish('water_flow_status', { water_flow_status: 'off' });
    }
 
   componentDidMount(){
-
+    clearInterval(this.timer)
     setInterval(() => {
-      this.setFinishLoading()
+        this.setFinishLoading()
+      // this.stopTimer()
       // this.setWateringStatus(this.props.currWeather.precip_mm)
     }, 5000);
   }
 
+  handleToggle(e){
+    this.setState({timerOn: !this.state.timerOn})
+    console.log(this.state.timerOn)
+    if (this.state.timerOn === false) {
+      this.startWatering()
+      this.setState({timeDisplay: ''})
+    } else {
+      this.stopWatering()
+      this.setState({timeDisplay: 'none'})
+    }
+  }
+
   setWateringStatus(precip){
-    console.log(precip)
     if (precip === 0) {
       return (
-        <CardContent>
-          <Grid container spacing={24}>
-            <Grid item>
+            <Grid item xs={1.2} style={{marginLeft: '15px'}}>
                 <Typography variant="headline">
                     No Rainfall predicted for today, watering is required.
                 </Typography>
                 <br />
-                <Typography variant='subheading'>
+                <Typography variant='body2'>
                     Watering will be automated, if more is required water flow can be controlled below using the relevant buttons.
                     Monitor moisture and watering amount to ensure crops are not over watered.
                 </Typography>
             </Grid>
-            <Grid item xs={1.2}>
-                <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
-                  Start Watering
-                </Button>
-            </Grid>
-          <Grid item xs={1.2}>
-            <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
-              End Watering
-            </Button>
-          </Grid>
-          </Grid>
-      </CardContent>
+
       )
     } else {
       return (
-    <CardContent>
-      <Grid container spacing={24}>
-        <Grid item>
-        <Typography variant="subheading">{precip}mms Rainfall Expected Today, watering will not take place.
+
+        <Grid item xs={1.2} style={{marginLeft: '10px'}}>
+        <Typography variant="body2">{precip}mms Rainfall Expected Today, watering will not take place.
           If more is required, water flow can be controlled below.
           Monitor moisture and watering amount to ensure crops are not over watered.
         </Typography>
       </Grid>
-
-        <Grid item xs={1.2}>
-            <Button variant="contained" color="primary" onClick={() => { this.startWatering() }}>
-              Start Watering
-            </Button>
-        </Grid>
-      <Grid item xs={1.2}>
-        <Button variant="contained" color="primary" onClick={() => { this.stopWatering() }}>
-          End Watering
-        </Button>
-      </Grid>
-    </Grid>
-  </CardContent>
       )
     }
   }
 
   render() {
+    const {time, start, prevWateringDate, prevWateringTime} = this.state;
+    const wateringTime = "Previously watered on " + prevWateringDate + " for " + ms(prevWateringTime)
     const LoadingProgress = (props) => {
     const { done, } = props;
+    const self = this;
       if (done && this.props.currWeather != null) {
         return (
-          <div style={{marginRight: "3  0px"}}>
-            {this.setWateringStatus(this.props.currWeather.precip_mm)}
-          </div>
+            <div>
+              {this.setWateringStatus(this.props.currWeather.precip_mm)}
+            </div>
+
 
           );
       } else {
@@ -119,12 +152,26 @@ class Watering extends Component {
           <Card style={{maxWidth: 345,  flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <CardHeader
               title="Watering Status"
-              subheader="Current Status: Live, Last Reading: 12:00"
+              subheader={wateringTime}
               />
+              <CardContent>
+                <Grid container spacing={24}>
               <LoadingProgress
                 loading={this.state.load}
                 done={this.state.load}
                 />
+              <Grid item style={{display: this.state.buttonDisplay}}>
+                  <TimerIcon style={{verticalAlign: 'middle', fontSize: '25px'}} />
+                  <Switch
+                    onClick={this.handleToggle}
+                  />
+                <Typography style={{display: this.state.timeDisplay}} variant="subheading">
+                  Time Watered: {ms(time)}
+                </Typography>
+                </Grid>
+              </Grid>
+             </CardContent>
+
           </Card>
         );
   }
