@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import PubSub from 'aws-amplify';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import ms from "pretty-ms"
 import Paper from '@material-ui/core/Paper';
 import Switch from '@material-ui/core/Switch';
 import TimerIcon from '@material-ui/icons/Opacity'
@@ -126,9 +125,22 @@ class Watering extends Component {
     }
   }
 
+  msToTime(duration) {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+}
+
   render() {
     const {time, start, prevWateringDate, prevWateringTime} = this.state;
-    const wateringTime = "Previously watered on " + prevWateringDate + " for " + ms(prevWateringTime)
+    const wateringTime = "Previously watered on " + prevWateringDate + " for " + this.msToTime(prevWateringTime)
     const LoadingProgress = (props) => {
     const { done, } = props;
     const self = this;
@@ -166,7 +178,7 @@ class Watering extends Component {
                     onClick={this.handleToggle}
                   />
                 <Typography style={{display: this.state.timeDisplay}} variant="subheading">
-                  Time Watered: {ms(time)}
+                  Time Watered: {this.msToTime(time)}
                 </Typography>
                 </Grid>
               </Grid>
